@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicTrack – Administrative Authority Login</title>
+    <meta name="description" content="Secure administrative access portal for municipal directors, department supervisors, and system administrators.">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <style>
+        .admin-auth-card::before {
+            background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 50%, #0f172a 100%) !important;
+            height: 6px;
+        }
+        .admin-seal {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #60a5fa;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
+            margin-bottom: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="auth-body">
+
+    <!-- Top Gov Navigation Banner -->
+    <div class="gov-topbar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="text-decoration-none text-white small">
+                <i class="bi bi-arrow-left me-1"></i> Back to CivicTrack Public Portal
+            </a>
+            <span class="small text-white-50">
+                <i class="bi bi-shield-lock-fill text-warning me-1"></i> Restricted Government Administration Area
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Admin Login Container -->
+    <div class="auth-wrapper">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4">
+                    
+                    <div class="auth-card admin-auth-card">
+                        <div class="auth-card-body">
+                            
+                            <!-- Header / Seal -->
+                            <div class="text-center mb-4">
+                                <div class="admin-seal">
+                                    <i class="bi bi-shield-shaded"></i>
+                                </div>
+                                <h3 class="auth-title">System Admin Console</h3>
+                                <p class="auth-subtitle mb-0">
+                                    Municipal Governance & Central Redressal Gateway
+                                </p>
+                            </div>
+
+                            <!-- Alert Box for Error / Success -->
+                            <div id="adminLoginAlert" class="alert d-none" role="alert"></div>
+
+                            <!-- Login Form -->
+                            <form id="adminLoginForm" novalidate>
+                                
+                                <!-- Email -->
+                                <div class="mb-3">
+                                    <label for="adminEmail" class="form-label">Official Administrative Email <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                                        <input type="email" class="form-control" id="adminEmail" placeholder="admin@civictrack.com" required autocomplete="username">
+                                    </div>
+                                    <div class="field-error-text" id="adminEmailError"></div>
+                                </div>
+
+                                <!-- Password with Toggle -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label for="adminPassword" class="form-label mb-0">Security Password <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+                                        <input type="password" class="form-control" id="adminPassword" placeholder="••••••••" required autocomplete="current-password">
+                                        <button type="button" class="password-toggle-btn" data-target="adminPassword" aria-label="Toggle password visibility">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="field-error-text" id="adminPasswordError"></div>
+                                </div>
+
+                                <!-- Security Compliance Agreement -->
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="adminAuditCheck" required checked>
+                                        <label class="form-check-label small text-secondary" for="adminAuditCheck">
+                                            I confirm access is authorized under the Municipal Digital Governance Act.
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn btn-gov-navy w-100 py-3 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2" id="adminLoginBtn">
+                                    <i class="bi bi-shield-lock-fill"></i> Secure Admin Sign In
+                                </button>
+                            </form>
+
+                            <!-- Citizen Redirect Link -->
+                            <div class="text-center auth-footer-links mt-4 pt-3 border-top">
+                                <span>Are you a resident citizen?</span>
+                                <a href="login.html" class="ms-1">Go to Citizen Login</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Demo Credentials Helper -->
+                    <div class="auth-hint-card mt-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span class="fw-bold text-dark small"><i class="bi bi-key-fill text-primary me-1"></i> Demo Admin Account:</span>
+                            <button type="button" class="btn btn-sm btn-link p-0 text-decoration-none fw-semibold" onclick="fillAdminDemo()">Autofill</button>
+                        </div>
+                        <div class="small text-secondary mt-1">
+                            <code>admin@civictrack.com</code> / <code>password123</code>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        // Password toggle
+        document.querySelectorAll('.password-toggle-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetInput = document.getElementById(btn.getAttribute('data-target'));
+                const icon = btn.querySelector('i');
+                if (targetInput.type === 'password') {
+                    targetInput.type = 'text';
+                    icon.classList.replace('bi-eye', 'bi-eye-slash');
+                } else {
+                    targetInput.type = 'password';
+                    icon.classList.replace('bi-eye-slash', 'bi-eye');
+                }
+            });
+        });
+
+        // Form Submission
+        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value;
+            const alertBox = document.getElementById('adminLoginAlert');
+            const submitBtn = document.getElementById('adminLoginBtn');
+
+            alertBox.className = 'alert d-none';
+
+            if (!email || !password) {
+                alertBox.className = 'alert alert-danger';
+                alertBox.textContent = 'Please provide both administrative email and password.';
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Authenticating Credentials...';
+
+            try {
+                const response = await Auth.login(email, password);
+                const roles = response.roles || [];
+
+                if (!roles.includes('ROLE_ADMIN')) {
+                    Auth.logout();
+                    alertBox.className = 'alert alert-danger';
+                    alertBox.textContent = 'Access Denied: Your account does not possess System Administrator privileges.';
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="bi bi-shield-lock-fill"></i> Secure Admin Sign In';
+                    return;
+                }
+
+                alertBox.className = 'alert alert-success';
+                alertBox.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Admin authorization verified. Loading administrative console...';
+
+                setTimeout(() => {
+                    window.location.href = 'admin-dashboard.html';
+                }, 1000);
+
+            } catch (err) {
+                alertBox.className = 'alert alert-danger';
+                alertBox.textContent = err.message || 'Authentication failed. Please verify admin credentials.';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="bi bi-shield-lock-fill"></i> Secure Admin Sign In';
+            }
+        });
+
+        function fillAdminDemo() {
+            document.getElementById('adminEmail').value = 'admin@civictrack.com';
+            document.getElementById('adminPassword').value = 'password123';
+        }
+    </script>
+</body>
+</html>

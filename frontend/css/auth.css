@@ -1,0 +1,269 @@
+/* ==============================================================
+   CivicTrack - Authentication Pages Stylesheet (Login & Register)
+   Theme: Blue (#2563EB), Navy (#0F172A), Light Slate (#F8FAFC)
+   ============================================================== */
+
+:root {
+    --primary: #2563EB;
+    --primary-hover: #1d4ed8;
+    --navy: #0F172A;
+    --navy-light: #1e293b;
+    --bg-light: #F8FAFC;
+    --border-color: #e2e8f0;
+    --card-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+}
+
+body.auth-body {
+    background-color: var(--bg-light);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(15, 23, 42, 0.05) 0px, transparent 50%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --------------------------------------------------------------
+   1. Auth Container & Cards
+   -------------------------------------------------------------- */
+.auth-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+}
+
+.auth-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary) 0%, #60a5fa 100%);
+}
+
+.auth-card-body {
+    padding: 40px;
+}
+
+/* --------------------------------------------------------------
+   2. Typography & Header Elements
+   -------------------------------------------------------------- */
+.auth-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
+    font-size: 0.92rem;
+    color: #64748b;
+}
+
+.auth-emblem {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
+    margin-bottom: 16px;
+}
+
+/* --------------------------------------------------------------
+   3. Input Groups, Labels & Icons
+   -------------------------------------------------------------- */
+.form-label {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.input-group-text {
+    background-color: #f8fafc;
+    border-color: var(--border-color);
+    color: #64748b;
+    font-size: 1.05rem;
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+.form-control {
+    border-color: var(--border-color);
+    padding: 11px 14px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Password Toggle Eye Button */
+.password-toggle-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-left: none;
+    color: #64748b;
+    padding: 0 14px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.password-toggle-btn:hover {
+    color: var(--primary);
+    background-color: #f1f5f9;
+}
+
+.password-toggle-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* --------------------------------------------------------------
+   4. Validation Feedback & Password Strength
+   -------------------------------------------------------------- */
+.field-error-text {
+    font-size: 0.8rem;
+    color: #dc2626;
+    margin-top: 4px;
+    display: none;
+    align-items: center;
+    gap: 4px;
+}
+
+.is-invalid ~ .field-error-text,
+.input-group.is-invalid ~ .field-error-text {
+    display: flex;
+}
+
+.form-control.is-invalid {
+    border-color: #dc2626 !important;
+    background-image: none;
+}
+
+.form-control.is-valid {
+    border-color: #16a34a !important;
+    background-image: none;
+}
+
+.strength-meter-container {
+    height: 4px;
+    background-color: #e2e8f0;
+    border-radius: 2px;
+    margin-top: 6px;
+    overflow: hidden;
+}
+
+.strength-meter-bar {
+    height: 100%;
+    width: 0%;
+    transition: all 0.3s ease;
+}
+
+.strength-meter-bar.weak { width: 33%; background-color: #ef4444; }
+.strength-meter-bar.medium { width: 66%; background-color: #f59e0b; }
+.strength-meter-bar.strong { width: 100%; background-color: #10b981; }
+
+.strength-text {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 3px;
+    display: block;
+}
+
+/* --------------------------------------------------------------
+   5. Buttons & Links
+   -------------------------------------------------------------- */
+.btn-auth-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%);
+    color: #ffffff;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 20px;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-auth-primary:hover {
+    background: linear-gradient(135deg, var(--primary-hover) 0%, #1e40af 100%);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+.btn-auth-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* --------------------------------------------------------------
+   6. Demo Account Callout & Security Notice
+   -------------------------------------------------------------- */
+.auth-hint-card {
+    background-color: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 0.85rem;
+}
+
+.auth-footer-links {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.auth-footer-links a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* --------------------------------------------------------------
+   7. Responsive adjustments
+   -------------------------------------------------------------- */
+@media (max-width: 575.98px) {
+    .auth-card-body {
+        padding: 28px 20px;
+    }
+    .auth-title {
+        font-size: 1.45rem;
+    }
+}

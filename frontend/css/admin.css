@@ -1,0 +1,659 @@
+/* ==============================================================
+   CivicTrack - Modern Government Admin Dashboard Stylesheet
+   Theme: Navy (#0F172A), Royal Blue (#2563EB), Light Slate (#F8FAFC)
+   ============================================================== */
+
+:root {
+    --primary: #2563EB;
+    --primary-hover: #1d4ed8;
+    --primary-light: #eff6ff;
+    --navy: #0F172A;
+    --navy-surface: #1E293B;
+    --bg-light: #F8FAFC;
+    --border-color: #E2E8F0;
+    --card-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    --hover-shadow: 0 10px 24px -4px rgba(37, 99, 235, 0.12);
+    --admin-sidebar-width: 280px;
+}
+
+body.admin-body {
+    background-color: var(--bg-light);
+    color: var(--navy);
+    font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* 1. Admin Top Header */
+.admin-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+}
+
+.admin-emblem-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--navy) 0%, #1e3a8a 100%);
+    color: #60a5fa;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+}
+
+/* 2. Admin Sidebar (Desktop & Offcanvas) */
+.admin-wrapper {
+    display: flex;
+    min-height: calc(100vh - 65px);
+}
+
+.admin-sidebar {
+    width: var(--admin-sidebar-width);
+    background-color: var(--navy);
+    color: #cbd5e1;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 65px;
+    height: calc(100vh - 65px);
+    overflow-y: auto;
+}
+
+.admin-sidebar-heading {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748b;
+    padding: 12px 14px 6px;
+}
+
+.admin-sidebar .nav-link {
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+}
+
+.admin-sidebar .nav-link i {
+    font-size: 1.15rem;
+    width: 22px;
+    text-align: center;
+    color: #64748b;
+    transition: color 0.2s ease;
+}
+
+.admin-sidebar .nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.admin-sidebar .nav-link:hover i {
+    color: #60a5fa;
+}
+
+.admin-sidebar .nav-link.active {
+    background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+.admin-sidebar .nav-link.active i {
+    color: #ffffff;
+}
+
+/* Mobile Offcanvas Admin Sidebar */
+.offcanvas-admin {
+    background-color: var(--navy);
+    color: #cbd5e1;
+    width: var(--admin-sidebar-width) !important;
+}
+
+.offcanvas-admin .btn-close-white {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* 3. Main Dashboard Content */
+.admin-main {
+    flex: 1;
+    padding: 30px;
+    background-color: var(--bg-light);
+    overflow-x: hidden;
+}
+
+/* 4. 5 Dashboard Metric Cards */
+.admin-metric-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.25s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.admin-metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--hover-shadow);
+    border-color: #bfdbfe;
+}
+
+.metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.metric-label-text {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #64748b;
+}
+
+.metric-value-text {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+}
+
+.admin-metric-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.icon-total { background-color: #eff6ff; color: #2563eb; }
+.icon-pending { background-color: #fffbeb; color: #d97706; }
+.icon-progress { background-color: #f0fdfa; color: #0d9488; }
+.icon-resolved { background-color: #ecfdf5; color: #059669; }
+.icon-rejected { background-color: #fef2f2; color: #dc2626; }
+
+/* 5. Chart Containers */
+.chart-box-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--card-shadow);
+    height: 100%;
+}
+
+.chart-canvas-wrap {
+    position: relative;
+    height: 280px;
+    width: 100%;
+}
+
+/* 6. Admin Table */
+.admin-table-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+}
+
+.admin-table-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.table-admin th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.table-admin td {
+    padding: 14px 18px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.table-admin tr:hover td {
+    background-color: #f8fafc;
+}
+
+@media (max-width: 991.98px) {
+    .admin-sidebar {
+        display: none;
+    }
+    .admin-main {
+        padding: 20px 16px;
+    }
+}
+
+
+/* ==============================================================
+   7. Complaint Management Specific Styles
+   ============================================================== */
+
+/* Filter Pills */
+.filter-pills-bar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+}
+
+.filter-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    border: 1px solid var(--border-color);
+    background: #ffffff;
+    color: #475569;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.filter-pill-btn:hover {
+    background-color: #f1f5f9;
+    color: var(--navy);
+    border-color: #cbd5e1;
+}
+
+.filter-pill-btn.active {
+    background-color: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+.filter-pill-btn.active .badge {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    color: #ffffff !important;
+}
+
+/* User Avatar In Table */
+.table-citizen-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.table-citizen-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* Photo Gallery & Thumbnail Grid */
+.complaint-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px;
+}
+
+.complaint-photo-thumb {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 105px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    background-color: #f1f5f9;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.complaint-photo-thumb:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.15);
+}
+
+.complaint-photo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-overlay-zoom {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-size: 1.2rem;
+}
+
+.complaint-photo-thumb:hover .photo-overlay-zoom {
+    opacity: 1;
+}
+
+/* Location Card in Details Modal */
+.location-map-box {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.map-placeholder-graphic {
+    height: 140px;
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #cbd5e1;
+}
+
+.map-pin-pulse {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ef4444;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.25);
+    animation: pinPulse 2s infinite;
+}
+
+@keyframes pinPulse {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    70% { box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Audit History Timeline in Modal */
+.audit-timeline {
+    position: relative;
+    padding-left: 28px;
+}
+
+.audit-timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background-color: #e2e8f0;
+}
+
+.audit-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.audit-item:last-child {
+    margin-bottom: 0;
+}
+
+.audit-dot {
+    position: absolute;
+    left: -28px;
+    top: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 2px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    color: var(--primary);
+}
+
+.audit-item.status-resolved .audit-dot {
+    border-color: #10b981;
+    color: #10b981;
+    background-color: #ecfdf5;
+}
+
+.audit-item.status-rejected .audit-dot {
+    border-color: #ef4444;
+    color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.audit-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
+}
+
+/* Floating Toast Container */
+.civic-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1090;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ==============================================================
+   GIS & Interactive Map Styles
+   ============================================================== */
+.gis-map-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    position: relative;
+}
+
+#adminGisMap {
+    height: 720px;
+    width: 100%;
+    z-index: 1;
+}
+
+/* Floating Map Legend Overlay */
+.gis-map-legend {
+    position: absolute;
+    bottom: 24px;
+    left: 20px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 16px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+    max-width: 320px;
+    font-size: 0.82rem;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* Custom Leaflet Pin */
+.custom-leaflet-marker {
+    background: transparent;
+    border: none;
+}
+
+.custom-leaflet-marker:hover > div {
+    transform: rotate(-45deg) scale(1.15) !important;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* GIS Inspector Drawer / Card */
+.gis-inspector-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: var(--card-shadow);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.gis-inspector-header {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 16px 20px;
+    border-radius: 14px 14px 0 0;
+}
+
+.gis-inspector-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+    max-height: 640px;
+}
+
+/* Metric KPI strip */
+.gis-metric-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.gis-metric-pill:hover, .gis-metric-pill.active {
+    border-color: var(--primary);
+    background-color: var(--primary-light);
+    color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.12);
+}
+
+.gis-metric-pill .count {
+    padding: 2px 7px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: #f1f5f9;
+}
+
+/* Smooth Horizontal Sliding Filter Strip */
+#statusFilterPillsContainer {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+    scroll-behavior: smooth;
+}
+
+#statusFilterPillsContainer::-webkit-scrollbar {
+    height: 6px;
+}
+
+#statusFilterPillsContainer::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#statusFilterPillsContainer::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 6px;
+}
+
+/* Responsive GIS Map & Sliding Adjustments */
+@media (max-width: 991.98px) {
+    #adminGisMap {
+        height: 500px;
+    }
+
+    .gis-map-legend {
+        max-width: calc(100% - 32px);
+        bottom: 16px;
+        left: 16px;
+        padding: 10px 14px;
+        font-size: 0.78rem;
+    }
+}
+
+@media (max-width: 576px) {
+    #adminGisMap {
+        height: 380px;
+    }
+
+    .gis-map-legend {
+        max-width: calc(100% - 20px);
+        bottom: 10px;
+        left: 10px;
+        padding: 8px 10px;
+        font-size: 0.72rem;
+    }
+
+    .gis-inspector-card {
+        margin-top: 10px;
+    }
+}

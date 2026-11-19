@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicTrack – Track Public Grievance</title>
+    <meta name="description" content="Track your civic complaint status in real-time. View department assignment, field inspection timeline, and official resolution notes.">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Leaflet.js CSS for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/my-complaints.css">
+    <link rel="stylesheet" href="css/tracking.css">
+</head>
+<body class="tracking-body">
+
+    <!-- Top Gov Navigation Banner -->
+    <div class="gov-topbar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <a href="index.html" class="text-decoration-none text-white small">
+                    <i class="bi bi-house-door me-1"></i> Public Portal
+                </a>
+                <span class="text-white-50 d-none d-sm-inline">|</span>
+                <a href="citizen-dashboard.html" class="text-decoration-none text-white small d-none d-sm-inline">
+                    <i class="bi bi-speedometer2 me-1"></i> Citizen Dashboard
+                </a>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="small text-white-50"><i class="bi bi-shield-check text-warning me-1"></i> 24x7 Public Tracking Desk</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="dash-header d-flex justify-content-between align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- Brand -->
+            <a href="index.html" class="navbar-brand d-flex align-items-center gap-2 mb-0">
+                <div class="dash-brand-emblem">
+                    <i class="bi bi-building-check"></i>
+                </div>
+                <div>
+                    <span class="fw-bold fs-5 text-navy">CivicTrack</span>
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle ms-2 px-2 py-1 brand-badge">Live Tracking</span>
+                </div>
+            </a>
+
+            <!-- Quick Action: File New Grievance -->
+            <div class="d-flex align-items-center gap-2">
+                <!-- Notifications Dropdown Trigger -->
+                <div class="dropdown">
+                    <button class="btn btn-light rounded-circle position-relative p-2 border notif-dropdown-toggle" id="topNotifBellBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications">
+                        <i class="bi bi-bell-fill text-secondary"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" style="font-size: 0.65rem;" id="topNotifBadge">
+                            0
+                        </span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end shadow-lg border-0 notif-dropdown-menu mt-2">
+                        <div class="notif-header">
+                            <div class="d-flex align-items-center gap-2">
+                                <h6 class="fw-bold mb-0 text-dark">Notifications</h6>
+                                <span class="badge bg-primary-subtle text-primary" id="dropdownUnreadPill">0 New</span>
+                            </div>
+                            <button type="button" class="btn btn-link btn-sm text-primary text-decoration-none p-0 fw-semibold" style="font-size: 0.78rem;" onclick="NotificationManager.markAllAsRead()">
+                                Mark all read
+                            </button>
+                        </div>
+                        <div class="notif-list-container" id="topNotifDropdownList">
+                            <!-- Populated dynamically via notification.js -->
+                        </div>
+                        <div class="notif-footer">
+                            <a href="javascript:void(0)" onclick="NotificationManager.openHistoryModal()" class="small text-primary text-decoration-none fw-semibold">
+                                <i class="bi bi-clock-history me-1"></i> View Complete Notification History &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="my-complaints.html" class="btn btn-outline-secondary btn-sm fw-semibold d-none d-sm-inline-flex">
+                    <i class="bi bi-card-checklist me-1"></i> My Complaints
+                </a>
+                <a href="report-grievance.html" class="btn btn-primary btn-sm fw-semibold d-inline-flex align-items-center gap-1 shadow-sm">
+                    <i class="bi bi-plus-circle-fill"></i> File Grievance
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container py-4">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb small">
+                <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="citizen-dashboard.html" class="text-decoration-none">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Track Complaint</li>
+            </ol>
+        </nav>
+
+        <!-- 1. COMPLAINT SEARCH BAR (Enter Unique Complaint ID) -->
+        <div class="track-search-card">
+            <div class="row align-items-center g-3">
+                <div class="col-lg-7">
+                    <h4 class="fw-bold text-navy mb-1"><i class="bi bi-search text-primary me-2"></i> Track Your Grievance</h4>
+                    <p class="text-muted small mb-0">Enter your 12-character Complaint Tracking ID to retrieve real-time departmental progress and inspection logs.</p>
+                </div>
+                <div class="col-lg-5">
+                    <form id="trackingSearchForm">
+                        <div class="input-group track-input-group">
+                            <input type="text" class="form-control" id="trackingNumberInput" placeholder="e.g. GRV-2026-8910" required autocomplete="off">
+                            <button type="submit" class="btn-track-submit">
+                                <i class="bi bi-arrow-right-circle"></i> Track
+                            </button>
+                        </div>
+                    </form>
+                    <div class="d-flex align-items-center gap-2 mt-2">
+                        <small class="text-muted" style="font-size: 0.78rem;">Quick Test IDs:</small>
+                        <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none text-primary small" onclick="performTrack('GRV-2026-8910')">#8910 (In Progress)</button>
+                        <span class="text-muted small">•</span>
+                        <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none text-primary small" onclick="performTrack('GRV-2026-7731')">#7731 (Resolved)</button>
+                        <span class="text-muted small">•</span>
+                        <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none text-danger small" onclick="performTrack('GRV-2026-6810')">#6810 (Rejected)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State Spinner -->
+        <div class="card p-5 text-center border-0 shadow-sm rounded-4 d-none" id="trackingLoadingState">
+            <div class="spinner-border text-primary mx-auto mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
+            <h5 class="fw-bold text-navy">Locating Grievance Record...</h5>
+            <p class="text-muted small mb-0">Fetching latest departmental updates and audit history.</p>
+        </div>
+
+        <!-- Not Found State -->
+        <div class="card p-5 text-center border-0 shadow-sm rounded-4 d-none" id="trackingNotFoundState">
+            <div class="upload-icon-circle mx-auto mb-3 bg-danger-subtle text-danger">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+            </div>
+            <h5 class="fw-bold text-navy mb-1">Complaint Record Not Found</h5>
+            <p class="text-muted small mb-3">No grievance matches tracking reference "<span id="notFoundQueryText" class="fw-bold"></span>". Please verify your input or check your Citizen Dashboard.</p>
+            <div>
+                <a href="my-complaints.html" class="btn btn-primary btn-sm px-3">
+                    <i class="bi bi-card-checklist me-1"></i> View My Filed Complaints
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. TRACKING RESULTS CONTAINER -->
+        <div id="trackingResultsContainer" class="d-none">
+
+            <!-- Card A: Complaint Summary & Header Strip -->
+            <div class="grievance-main-card">
+                
+                <div class="tracking-header-bar d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="tracking-id-badge">
+                            <i class="bi bi-ticket-detailed"></i>
+                            <span id="displayTrackingNumber">GRV-2026-8910</span>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-light py-1 px-2 border-opacity-25" onclick="copyTrackingCode()" title="Copy tracking ID">
+                            <i class="bi bi-clipboard me-1"></i> <span id="copyBtnText">Copy</span>
+                        </button>
+                    </div>
+
+                    <div>
+                        <!-- Current Status Badge -->
+                        <span class="status-badge status-IN_PROGRESS fs-6" id="displayStatusBadge">
+                            <i class="bi bi-tools"></i> IN PROGRESS
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-4 p-md-5 bg-white">
+                    
+                    <!-- Complaint Title & Category -->
+                    <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                        <span class="category-pill bg-primary-subtle text-primary border border-primary-subtle px-3 py-1 fw-bold" id="displayCategory">Road Damage</span>
+                        <span class="text-muted small">•</span>
+                        <span class="text-secondary small fw-semibold" id="displayDepartment">Public Works Department</span>
+                    </div>
+
+                    <h3 class="fw-bold text-navy mb-3" id="displayTitle">Complaint Title</h3>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-dark text-uppercase small" style="letter-spacing: 0.5px;">Problem Description</h6>
+                        <p class="text-secondary mb-0" id="displayDescription" style="line-height: 1.7;">
+                            Loading description...
+                        </p>
+                    </div>
+
+                    <!-- Metadata Grid: Location & Submission Date -->
+                    <div class="row g-3 mb-2">
+                        <div class="col-md-6">
+                            <div class="detail-item-box">
+                                <div class="detail-label"><i class="bi bi-geo-alt-fill text-danger me-1"></i> Incident Location</div>
+                                <div class="detail-val" id="displayLocation">45th Cross Road, Main St Junction</div>
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="small text-primary text-decoration-none mt-1 d-inline-block" id="displayMapLink">
+                                    <i class="bi bi-box-arrow-up-right me-1"></i> View on Map
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="detail-item-box">
+                                <div class="detail-label"><i class="bi bi-calendar3 text-primary me-1"></i> Submission Timestamp</div>
+                                <div class="detail-val" id="displayDate">Nov 17, 2026, 09:30 AM</div>
+                                <small class="text-muted d-block mt-1">Logged with digital audit stamp</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Complaint Location Map (OpenStreetMap) -->
+                    <div class="mb-4 d-none" id="trackingMapContainer">
+                        <div class="detail-item-box p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                                <div class="detail-label mb-0"><i class="bi bi-geo-alt-fill text-danger me-1"></i> Incident Geolocation Map (OpenStreetMap)</div>
+                                <span class="badge bg-light text-secondary border small font-monospace" id="mapCoordinatesLabel">19.0760, 72.8774</span>
+                            </div>
+                            <div id="trackingMiniMap" class="rounded-3 border shadow-sm" style="height: 230px; width: 100%; z-index: 1;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Uploaded Photo Evidence (if any) -->
+                    <div class="mb-4 d-none" id="displayPhotoContainer">
+                        <div class="detail-item-box">
+                            <div class="detail-label mb-2"><i class="bi bi-camera-fill text-primary me-1"></i> Photographic Evidence</div>
+                            <a id="photoPreviewLink" href="#" target="_blank" rel="noopener noreferrer">
+                                <img src="" id="displayPhotoImg" alt="Complaint Photo Evidence" class="img-fluid rounded-3 border shadow-sm" style="max-height: 280px; object-fit: cover;">
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Admin Remarks Container (When active / in progress / resolved) -->
+                    <div class="admin-remarks-box" id="adminRemarksContainer">
+                        <div class="admin-remarks-title">
+                            <i class="bi bi-chat-left-quote-fill"></i> Official Municipal Remarks & Action Taken
+                        </div>
+                        <p class="mb-0 text-dark small" id="adminRemarksText" style="line-height: 1.6;">
+                            Awaiting official review remarks.
+                        </p>
+                    </div>
+
+                    <!-- Rejection Banner (Shown when status is REJECTED) -->
+                    <div class="rejection-banner d-none" id="rejectionBannerContainer">
+                        <div class="d-flex align-items-center gap-2 mb-2 text-danger fw-bold">
+                            <i class="bi bi-x-octagon-fill fs-5"></i>
+                            <span>Complaint Closed: Application Rejected</span>
+                        </div>
+                        <p class="mb-0 text-danger-emphasis small" id="rejectionReasonText" style="line-height: 1.6;">
+                            Reason explanation here.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card B: Visual Status Timeline (5 Stages) -->
+            <div class="timeline-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                    <div>
+                        <h4 class="fw-bold text-navy mb-1"><i class="bi bi-signpost-split-fill text-primary me-2"></i> Grievance Lifecycle Timeline</h4>
+                        <p class="text-muted small mb-0">Follow the municipal resolution progression from submission to on-ground verification.</p>
+                    </div>
+                    <span class="badge bg-light text-secondary border px-3 py-2 fw-semibold">Step-by-Step SLA Tracking</span>
+                </div>
+
+                <!-- 5-Stage Visual Stepper -->
+                <div class="stepper-wrapper">
+                    
+                    <!-- 1. Submitted -->
+                    <div class="stepper-item completed" id="step-submitted">
+                        <div class="step-counter"><i class="bi bi-check-lg"></i></div>
+                        <div>
+                            <div class="step-name">1. Submitted</div>
+                            <div class="step-desc">Grievance registered with geotagged photo</div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Under Review -->
+                    <div class="stepper-item" id="step-review">
+                        <div class="step-counter">2</div>
+                        <div>
+                            <div class="step-name">2. Under Review</div>
+                            <div class="step-desc">Department verifies jurisdiction & priority</div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Assigned -->
+                    <div class="stepper-item" id="step-assigned">
+                        <div class="step-counter">3</div>
+                        <div>
+                            <div class="step-name">3. Assigned</div>
+                            <div class="step-desc">Designated to ward engineer & crew</div>
+                        </div>
+                    </div>
+
+                    <!-- 4. In Progress -->
+                    <div class="stepper-item" id="step-progress">
+                        <div class="step-counter">4</div>
+                        <div>
+                            <div class="step-name">4. In Progress</div>
+                            <div class="step-desc">Field team deployed on-site executing repairs</div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Resolved -->
+                    <div class="stepper-item" id="step-resolved">
+                        <div class="step-counter">5</div>
+                        <div>
+                            <div class="step-name">5. Resolved</div>
+                            <div class="step-desc">Repairs completed with photographic verification</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Bootstrap 5 JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Leaflet.js for Interactive OpenStreetMap -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- Core API & Tracking Logic -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/grievance.js"></script>
+    <script src="js/notification.js"></script>
+    <script src="js/tracking.js"></script>
+</body>
+</html>

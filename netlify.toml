@@ -1,0 +1,47 @@
+# ==============================================================
+# CivicTrack - Netlify Deployment Configuration
+# ==============================================================
+
+[build]
+  publish = "frontend"
+  command = "echo 'CivicTrack Static Frontend Ready'"
+
+# Security Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# API Reverse Proxy to Backend (Render / Railway)
+[[redirects]]
+  from = "/api/v1/*"
+  to = "https://civictrack-backend.onrender.com/api/v1/:splat"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+
+# Uploaded Evidence Proxy
+[[redirects]]
+  from = "/uploads/*"
+  to = "https://civictrack-backend.onrender.com/uploads/:splat"
+  status = 200
+  force = true
+
+# Fallback clean URLs
+[[redirects]]
+  from = "/dashboard"
+  to = "/citizen-dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin-dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/track"
+  to = "/grievance-details.html"
+  status = 200

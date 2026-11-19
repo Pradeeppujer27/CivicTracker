@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicTrack – Public Grievance and Civic Issue Reporting System</title>
+    <meta name="description" content="Official Civic Issue Reporting Portal. Report potholes, waste overflow, water leakages, and streetlight issues directly to municipal departments with real-time tracking.">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- 1. Government Official Top Bar -->
+    <div class="gov-topbar">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-3">
+                <span><i class="bi bi-shield-shaded text-primary me-1"></i> Official Citizen Grievance Redressal Portal</span>
+                <span class="d-none d-md-inline text-secondary">|</span>
+                <span class="d-none d-md-inline"><i class="bi bi-clock-history me-1"></i> 24x7 Digital Civic Support</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <a href="tel:1902" class="small"><i class="bi bi-telephone-fill text-warning me-1"></i> Karnataka Janaspandana: <strong>1902</strong></a>
+                <span class="text-secondary">|</span>
+                <a href="tel:112" class="small text-white"><i class="bi bi-shield-fill text-danger me-1"></i> Emergency: <strong>112</strong></a>
+                <span class="text-secondary">|</span>
+                <a href="#track-section" class="small text-white"><i class="bi bi-search me-1"></i> Quick Track</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <!-- Brand Logo -->
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <div class="brand-emblem">
+                    <i class="bi bi-building-check"></i>
+                </div>
+                <div>
+                    <span>CivicTrack</span>
+                    <span class="brand-text-sub">Public Grievance System</span>
+                </div>
+            </a>
+
+            <!-- Mobile Hamburger Toggle -->
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#civicNavbar" aria-controls="civicNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-2 text-dark"></i>
+            </button>
+
+            <!-- Nav Links & Auth Controls -->
+            <div class="collapse navbar-collapse" id="civicNavbar">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+
+                <!-- Dynamic Auth Buttons (Managed via auth.js and main.js) -->
+                <div class="d-flex align-items-center gap-2" id="auth-nav-items">
+                    <a href="login.html" class="btn btn-outline-primary fw-semibold px-3 py-2">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                    </a>
+                    <a href="register.html" class="btn btn-gov-primary px-3 py-2">
+                        <i class="bi bi-person-plus-fill me-1"></i> Register
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3. Hero Section -->
+    <header class="hero-section" id="home">
+        <div class="hero-overlay-grid"></div>
+        <div class="container position-relative z-1">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-7">
+                    <div class="hero-badge mb-3">
+                        <i class="bi bi-patch-check-fill text-warning"></i> Certified Municipal Redressal Platform
+                    </div>
+                    <h1 class="hero-title mb-3">
+                        Your Voice, <span>Your City.</span>
+                    </h1>
+                    <p class="hero-description mb-4">
+                        CivicTrack bridges citizens directly with municipal departments. Report public problems—such as broken roads, uncollected waste, leaking pipes, or dark streetlights—with photo evidence and GPS accuracy, ensuring fast and transparent civic resolutions.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="report-grievance.html" class="btn btn-warning btn-lg fw-bold px-4 py-3 text-dark shadow">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> Report an Issue
+                        </a>
+                        <button type="button" class="btn btn-gov-outline btn-lg px-4 py-3" data-bs-toggle="modal" data-bs-target="#trackComplaintModal">
+                            <i class="bi bi-search me-2"></i> Track Complaint
+                        </button>
+                    </div>
+
+                    <!-- Trust indicators -->
+                    <div class="d-flex align-items-center gap-4 mt-4 pt-3 border-top border-white border-opacity-10 text-white-50 small flex-wrap">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-geo-alt-fill text-warning"></i> Geotagged Issues
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-shield-lock-fill text-info"></i> Direct Department Routing
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check2-circle text-success"></i> SLA-Backed Resolution
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Quick Tracking Widget -->
+                <div class="col-lg-5" id="track-section">
+                    <div class="hero-tracker-card">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h4 class="fw-bold mb-0 text-dark">
+                                <i class="bi bi-search text-primary me-2"></i> Track Status
+                            </h4>
+                            <span class="badge bg-primary-subtle text-primary fw-semibold px-2 py-1">Live Updates</span>
+                        </div>
+                        <p class="text-muted small mb-4">
+                            Check real-time department assignment, field inspection notes, and SLA progress on your filed grievance.
+                        </p>
+
+                        <form id="heroQuickTrackForm" onsubmit="handleQuickTrack(event)">
+                            <div class="mb-3">
+                                <label for="trackingInput" class="form-label fw-semibold small text-secondary">Grievance Tracking Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-ticket-detailed"></i></span>
+                                    <input type="text" id="trackingInput" class="form-control form-control-lg border-start-0 ps-0" placeholder="e.g. GRV-2026-8910" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-gov-primary w-100 py-3 fw-bold">
+                                <i class="bi bi-arrow-right-circle me-1"></i> Search Grievance
+                            </button>
+                        </form>
+
+                        <div class="mt-4 pt-3 border-top text-center">
+                            <small class="text-muted">
+                                Lost your tracking reference? <a href="login.html" class="text-primary fw-semibold text-decoration-none">Sign in to Citizen Dashboard</a>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 4. Statistics Section -->
+    <section class="stats-section" id="statistics">
+        <div class="container">
+            <div class="row g-4 text-center">
+                <div class="col-6 col-md-3">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="100" data-suffix="+">100+</div>
+                        <div class="stat-label">Reported Issues</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="96.2" data-suffix="%" data-decimal="1">96.2%</div>
+                        <div class="stat-label">Resolution Rate</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="48" data-suffix=" Hrs">48 Hrs</div>
+                        <div class="stat-label">Avg. Response Time</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="7499" data-suffix="">7,499</div>
+                        <div class="stat-label">Municipal Wards</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Complaint Category Cards Section -->
+    <section class="py-5" id="services">
+        <div class="container py-4">
+            <div class="text-center max-w-700 mx-auto mb-5">
+                <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill text-uppercase mb-2">Complaint Categories</span>
+                <h2 class="fw-extrabold text-navy display-6 fw-bold">CivicTrack – Public Grievance &amp; Civic Issue Reporting System</h2>
+            </div>
+
+            <div class="row g-4">
+                <!-- 1. Road Damage -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="category-icon-box cat-road">
+                                <i class="bi bi-cone-striped"></i>
+                            </div>
+                            <span class="category-badge">Public Works Dept</span>
+                        </div>
+                        <h4 class="category-title">Road Damage</h4>
+                        <p class="category-desc">Report hazardous potholes, damaged pavements, broken kerbstones, asphalt erosion, and dangerous road cracks.</p>
+                        <a href="report-grievance.html?cat=1" class="btn btn-outline-danger btn-sm rounded-pill fw-semibold mt-auto align-self-start px-3">
+                            <i class="bi bi-flag-fill me-1"></i> Report Road Issue
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 2. Garbage Collection -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="category-icon-box cat-waste">
+                                <i class="bi bi-trash3-fill"></i>
+                            </div>
+                            <span class="category-badge">Solid Waste Dept</span>
+                        </div>
+                        <h4 class="category-title">Garbage Collection</h4>
+                        <p class="category-desc">Report overflowing public dumpsters, missed door-to-door trash pickup, illegal street dumping, and organic waste accumulation.</p>
+                        <a href="report-grievance.html?cat=4" class="btn btn-outline-success btn-sm rounded-pill fw-semibold mt-auto align-self-start px-3">
+                            <i class="bi bi-flag-fill me-1"></i> Report Waste Issue
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. Water Supply -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="category-icon-box cat-water">
+                                <i class="bi bi-droplet-half"></i>
+                            </div>
+                            <span class="category-badge">Water Board</span>
+                        </div>
+                        <h4 class="category-title">Water Supply</h4>
+                        <p class="category-desc">Log complaints on pipeline bursts, contaminated drinking water, prolonged supply cuts, or low municipal water pressure.</p>
+                        <a href="report-grievance.html?cat=3" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold mt-auto align-self-start px-3">
+                            <i class="bi bi-flag-fill me-1"></i> Report Water Issue
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 4. Streetlight Issues -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="category-icon-box cat-light">
+                                <i class="bi bi-lightbulb-fill"></i>
+                            </div>
+                            <span class="category-badge">Electricity Board</span>
+                        </div>
+                        <h4 class="category-title">Streetlight Issues</h4>
+                        <p class="category-desc">Identify non-functional or flickering streetlights, exposed electrical wires, damaged lamp posts, and unlit public dark zones.</p>
+                        <a href="report-grievance.html?cat=5" class="btn btn-outline-warning btn-sm rounded-pill fw-semibold mt-auto align-self-start px-3 text-dark">
+                            <i class="bi bi-flag-fill me-1"></i> Report Lighting Issue
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 5. Drainage Problems -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="category-icon-box cat-drain">
+                                <i class="bi bi-water"></i>
+                            </div>
+                            <span class="category-badge">Drainage & Sewerage</span>
+                        </div>
+                        <h4 class="category-title">Drainage Problems</h4>
+                        <p class="category-desc">Notify municipal teams about choked storm drains, open manholes posing fatal hazards, sewage leaks, and monsoon waterlogging.</p>
+                        <a href="report-grievance.html?cat=2" class="btn btn-outline-info btn-sm rounded-pill fw-semibold mt-auto align-self-start px-3 text-dark">
+                            <i class="bi bi-flag-fill me-1"></i> Report Drainage Issue
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 6. Public Infrastructure -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="category-icon-box cat-infra">
+                                <i class="bi bi-buildings-fill"></i>
+                            </div>
+                            <span class="category-badge">Urban Development</span>
+                        </div>
+                        <h4 class="category-title">Public Infrastructure</h4>
+                        <p class="category-desc">Report broken public benches, encroached footpaths, damaged parks and playground facilities, and collapsed bus transit shelters.</p>
+                        <a href="report-grievance.html?cat=6" class="btn btn-outline-secondary btn-sm rounded-pill fw-semibold mt-auto align-self-start px-3">
+                            <i class="bi bi-flag-fill me-1"></i> Report Infra Issue
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. How It Works Section -->
+    <section class="py-5 bg-white border-top border-bottom" id="how-it-works">
+        <div class="container py-4">
+            <div class="text-center max-w-700 mx-auto mb-5">
+                <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill text-uppercase mb-2">Workflow & Accountability</span>
+                <h2 class="fw-bold text-navy display-6">How CivicTrack Resolves Issues</h2>
+                <p class="text-muted">A clear, SLA-driven transparent workflow from citizen submission to verified on-ground completion.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="process-step-card">
+                        <div class="step-number-badge">1</div>
+                        <div class="step-icon-wrapper">
+                            <i class="bi bi-camera-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">1. Citizen Reports</h5>
+                        <p class="text-muted small">Submit issue details with automatic GPS location and upload photo evidence from your phone or PC.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="process-step-card">
+                        <div class="step-number-badge">2</div>
+                        <div class="step-icon-wrapper">
+                            <i class="bi bi-cpu-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">2. Auto-Routing & SLA</h5>
+                        <p class="text-muted small">System assigns the grievance to the respective ward officer and generates a guaranteed SLA resolution countdown.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="process-step-card">
+                        <div class="step-number-badge">3</div>
+                        <div class="step-icon-wrapper">
+                            <i class="bi bi-tools"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">3. Field Crew Action</h5>
+                        <p class="text-muted small">Municipal field inspectors and repair crews are deployed on-site to inspect, execute, and verify repairs.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="process-step-card">
+                        <div class="step-number-badge">4</div>
+                        <div class="step-icon-wrapper">
+                            <i class="bi bi-patch-check-fill text-success"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">4. Verified Resolution</h5>
+                        <p class="text-muted small">Officers upload proof of work. Citizen receives instant SMS/Email notifications to confirm satisfactory closure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. About Section -->
+    <section class="py-5" id="about">
+        <div class="container py-4">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill text-uppercase mb-2">About The Initiative</span>
+                    <h2 class="fw-bold text-navy display-6 mb-3">Re-engineering Municipal Grievance Redressal</h2>
+                    <p class="text-muted mb-4">
+                        CivicTrack is an official open-governance initiative engineered to modernize public grievance management. By eliminating bureaucratic delays, manual paperwork, and lack of transparency, CivicTrack ensures that every civic concern voiced by a resident is tracked, acted upon, and resolved within guaranteed timeframes.
+                    </p>
+
+                    <div class="about-pillar-card">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-clock-history fs-3 text-primary"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1 text-dark">Guaranteed Service Level Agreements (SLAs)</h6>
+                                <p class="text-muted small mb-0">Strict resolution windows ranging from 48 hours for hazardous potholes to 7 days for street repairs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-pillar-card">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-images fs-3 text-primary"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1 text-dark">Photographic Proof of Work</h6>
+                                <p class="text-muted small mb-0">Municipal officers must upload geo-tagged resolution photos before a complaint can be formally closed.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-pillar-card">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-graph-up-arrow fs-3 text-primary"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1 text-dark">Executive Oversight & Accountability</h6>
+                                <p class="text-muted small mb-0">City administrators monitor overdue tickets and departmental efficiency in real-time dashboards.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card p-4 p-md-5 custom-card border-0 shadow-lg bg-white">
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <div class="brand-emblem">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-0 text-navy">Citizen Charter Commitment</h5>
+                                <span class="text-muted small">Standardized Public Service Delivery</span>
+                            </div>
+                        </div>
+
+                        <ul class="list-unstyled mb-4">
+                            <li class="d-flex align-items-start gap-2 mb-3">
+                                <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
+                                <div>
+                                    <strong>No Registration Required to Track:</strong> Anyone with a tracking code can inspect public status.
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-start gap-2 mb-3">
+                                <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
+                                <div>
+                                    <strong>Automated Escalation:</strong> Unattended complaints are auto-escalated to senior department directors.
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-start gap-2 mb-3">
+                                <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
+                                <div>
+                                    <strong>Direct Citizen Feedback:</strong> Rate municipal services upon grievance resolution.
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="p-3 bg-light rounded text-center">
+                            <span class="text-secondary small d-block mb-2">Ready to contribute to a cleaner, safer city?</span>
+                            <a href="register.html" class="btn btn-gov-primary px-4">
+                                <i class="bi bi-person-check-fill me-1"></i> Create Free Citizen Account
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Contact & Helpdesk Section -->
+    <section class="py-5 bg-light border-top" id="contact">
+        <div class="container py-4">
+            <div class="text-center max-w-700 mx-auto mb-5">
+                <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill text-uppercase mb-2">Government of Karnataka</span>
+                <h2 class="fw-bold text-navy display-6">Citizen Helpdesk & Official Karnataka Helplines</h2>
+                <p class="text-muted">Direct contact channels for public grievance redressal, emergency assistance, and municipal civic services across Karnataka.</p>
+            </div>
+
+            <!-- Row 1: Key Emergency & Citizen Helplines -->
+            <div class="row g-4 mb-4">
+                <!-- 1. Janaspandana Citizen Grievance Hotline -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="contact-info-card h-100">
+                        <div class="contact-icon-bubble bg-primary-subtle text-primary">
+                            <i class="bi bi-headset"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="fw-bold text-navy mb-0">Karnataka Janaspandana</h6>
+                                <span class="badge bg-primary-subtle text-primary fs-7">IPGRS</span>
+                            </div>
+                            <p class="text-muted small mb-2">Integrated Public Grievance Redressal System</p>
+                            <div class="mb-2">
+                                <a href="tel:1902" class="fw-bold fs-5 text-primary text-decoration-none d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-telephone-fill fs-6"></i> 1902 <span class="badge bg-primary text-white fs-7 fw-normal ms-1">Toll-Free</span>
+                                </a>
+                            </div>
+                            <div class="text-muted small"><i class="bi bi-clock me-1"></i> 24x7 CM Public Grievance Helpline</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Karnataka Unified Emergency ERSS -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="contact-info-card h-100">
+                        <div class="contact-icon-bubble bg-danger-subtle text-danger">
+                            <i class="bi bi-shield-fill-exclamation"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="fw-bold text-navy mb-0">Karnataka Emergency (ERSS)</h6>
+                                <span class="badge bg-danger-subtle text-danger fs-7">24x7</span>
+                            </div>
+                            <p class="text-muted small mb-2">Police, Fire & Unified Emergency Response</p>
+                            <div class="mb-2">
+                                <a href="tel:112" class="fw-bold fs-5 text-danger text-decoration-none d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-telephone-fill fs-6"></i> 112 <span class="badge bg-danger text-white fs-7 fw-normal ms-1">Toll-Free</span>
+                                </a>
+                            </div>
+                            <div class="text-muted small"><i class="bi bi-shield-check me-1"></i> Immediate Police & Fire Dispatch</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. BESCOM / Power Control Helpline -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="contact-info-card h-100">
+                        <div class="contact-icon-bubble bg-warning-subtle text-warning-emphasis">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="fw-bold text-navy mb-0">BESCOM / Karnataka Power</h6>
+                                <span class="badge bg-warning-subtle text-warning-emphasis fs-7">ESCOMs</span>
+                            </div>
+                            <p class="text-muted small mb-2">Power outages, fallen lines & electrical hazards</p>
+                            <div class="mb-2">
+                                <a href="tel:1912" class="fw-bold fs-5 text-dark text-decoration-none d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-telephone-fill fs-6 text-warning-emphasis"></i> 1912 <span class="badge bg-warning text-dark fs-7 fw-normal ms-1">24x7</span>
+                                </a>
+                            </div>
+                            <div class="text-muted small"><i class="bi bi-headset me-1"></i> Statewide Electrical Control Room</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. BWSSB / Urban Water Supply & Sewerage -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="contact-info-card h-100">
+                        <div class="contact-icon-bubble bg-info-subtle text-info-emphasis">
+                            <i class="bi bi-droplet-half"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="fw-bold text-navy mb-0">BWSSB / Water Supply</h6>
+                                <span class="badge bg-info-subtle text-info-emphasis fs-7">KUWSDB</span>
+                            </div>
+                            <p class="text-muted small mb-2">Water supply leaks, pipe bursts & drainage issues</p>
+                            <div class="mb-2">
+                                <a href="tel:1916" class="fw-bold fs-5 text-info-emphasis text-decoration-none d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-telephone-fill fs-6"></i> 1916 <span class="badge bg-info text-dark fs-7 fw-normal ms-1">Toll-Free</span>
+                                </a>
+                            </div>
+                            <div class="text-muted small"><i class="bi bi-water me-1"></i> 24x7 Water & Sewerage Board</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. BBMP / Urban Municipal Corporation -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="contact-info-card h-100">
+                        <div class="contact-icon-bubble bg-success-subtle text-success">
+                            <i class="bi bi-building"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="fw-bold text-navy mb-0">Municipal Civic Control</h6>
+                                <span class="badge bg-success-subtle text-success fs-7">BBMP / DMA</span>
+                            </div>
+                            <p class="text-muted small mb-2">Potholes, solid waste, garbage & sanitation</p>
+                            <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                                <a href="tel:1533" class="fw-bold fs-5 text-success text-decoration-none d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-telephone-fill fs-6"></i> 1533
+                                </a>
+                                <span class="text-muted">/</span>
+                                <a href="tel:08022660000" class="fw-semibold text-secondary text-decoration-none small">
+                                    080-22660000
+                                </a>
+                            </div>
+                            <div class="text-muted small"><i class="bi bi-geo-alt me-1"></i> Urban Civic Command Center</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. KSDMA State Disaster Management -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="contact-info-card h-100">
+                        <div class="contact-icon-bubble bg-danger-subtle text-danger">
+                            <i class="bi bi-tsunami"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="fw-bold text-navy mb-0">Disaster Management</h6>
+                                <span class="badge bg-danger-subtle text-danger fs-7">KSDMA</span>
+                            </div>
+                            <p class="text-muted small mb-2">Flood alerts, waterlogging & severe storms</p>
+                            <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                                <a href="tel:1077" class="fw-bold fs-5 text-danger text-decoration-none d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-telephone-fill fs-6"></i> 1077 <span class="text-muted fw-normal fs-7">(District)</span>
+                                </a>
+                                <span class="text-muted">/</span>
+                                <a href="tel:1070" class="fw-semibold text-danger text-decoration-none small">
+                                    1070 <span class="text-muted fw-normal fs-7">(State)</span>
+                                </a>
+                            </div>
+                            <div class="text-muted small"><i class="bi bi-shield-exclamation me-1"></i> Karnataka Disaster Response Unit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2: Official State Headquarters & Email Details -->
+            <div class="row g-4 pt-2">
+                <div class="col-md-6">
+                    <div class="contact-info-card h-100">
+                        <div class="contact-icon-bubble bg-primary-subtle text-primary">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="fw-bold text-navy mb-0">Directorate of Municipal Administration (DMA)</h6>
+                                <span class="badge bg-light border text-secondary fs-7">Headquarters</span>
+                            </div>
+                            <p class="text-muted small mb-2">Government of Karnataka Urban Development Department</p>
+                            <p class="text-secondary small mb-2">
+                                <i class="bi bi-pin-map-fill text-danger me-1"></i> 9th Floor, Vishveshwaraiah Main Tower, Dr. B.R. Ambedkar Veedhi, Bengaluru, Karnataka - 560001
+                            </p>
+                            <div class="small text-muted"><i class="bi bi-calendar-event me-1"></i> Public Grievance Hours: Monday – Friday (10:00 AM – 5:30 PM)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="contact-info-card h-100">
+                        <div class="contact-icon-bubble bg-success-subtle text-success">
+                            <i class="bi bi-envelope-check-fill"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="fw-bold text-navy mb-0">Official Grievance Email & Support</h6>
+                                <span class="badge bg-success-subtle text-success fs-7">SLA 24 Hrs</span>
+                            </div>
+                            <p class="text-muted small mb-2">Formal Written Grievance Petitions & Technical Support</p>
+                            <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                                <a href="mailto:grievance@karnataka.gov.in" class="fw-bold text-primary text-decoration-none">
+                                    <i class="bi bi-envelope me-1"></i>grievance@karnataka.gov.in
+                                </a>
+                                <span class="text-muted small">•</span>
+                                <a href="mailto:support@civictrack.karnataka.gov.in" class="fw-semibold text-secondary small text-decoration-none">
+                                    support@civictrack.karnataka.gov.in
+                                </a>
+                            </div>
+                            <div class="small text-muted"><i class="bi bi-check2-circle text-success me-1"></i> Automated ticket acknowledgment & SLA tracking within 24 working hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Quick Track Complaint Modal -->
+    <div class="modal fade" id="trackComplaintModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold" id="trackModalLabel">
+                        <i class="bi bi-search me-2"></i> Track Complaint Status
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="text-muted small mb-3">
+                        Enter the tracking code provided during grievance registration (e.g., <code>GRV-2026-8910</code>).
+                    </p>
+                    <form onsubmit="handleModalTrack(event)">
+                        <div class="mb-3">
+                            <label for="modalTrackingInput" class="form-label fw-semibold">Tracking Code</label>
+                            <input type="text" id="modalTrackingInput" class="form-control form-control-lg" placeholder="Enter tracking number..." required>
+                        </div>
+                        <button type="submit" class="btn btn-gov-primary w-100 py-2 fw-semibold">
+                            Check Real-Time Status
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. Official Footer -->
+    <footer class="gov-footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <div class="brand-emblem">
+                            <i class="bi bi-building-check"></i>
+                        </div>
+                        <h4 class="text-white fw-bold mb-0">CivicTrack</h4>
+                    </div>
+                    <p class="text-secondary small mb-3">
+                        CivicTrack is the official digital grievance portal empowering citizens to report public issues and monitor transparent resolution by municipal civic bodies.
+                    </p>
+                    <div class="d-flex gap-3 text-secondary fs-5">
+                        <a href="#" class="text-secondary" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-secondary" aria-label="Twitter / X"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-secondary" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-secondary" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-2">
+                    <h5>Quick Navigation</h5>
+                    <ul>
+                        <li><a href="#home"><i class="bi bi-chevron-right small"></i> Home</a></li>
+                        <li><a href="#about"><i class="bi bi-chevron-right small"></i> About CivicTrack</a></li>
+                        <li><a href="#services"><i class="bi bi-chevron-right small"></i> Issue Categories</a></li>
+                        <li><a href="#how-it-works"><i class="bi bi-chevron-right small"></i> Resolution Workflow</a></li>
+                        <li><a href="#contact"><i class="bi bi-chevron-right small"></i> Citizen Helpdesk</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-6 col-lg-3">
+                    <h5>Municipal Departments</h5>
+                    <ul>
+                        <li><a href="report-grievance.html?cat=1"><i class="bi bi-chevron-right small"></i> Public Works (Roads)</a></li>
+                        <li><a href="report-grievance.html?cat=4"><i class="bi bi-chevron-right small"></i> Solid Waste Management</a></li>
+                        <li><a href="report-grievance.html?cat=3"><i class="bi bi-chevron-right small"></i> Water Supply & Sewerage</a></li>
+                        <li><a href="report-grievance.html?cat=5"><i class="bi bi-chevron-right small"></i> Electricity Board</a></li>
+                        <li><a href="report-grievance.html?cat=7"><i class="bi bi-chevron-right small"></i> Public Health & Safety</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3">
+                    <h5>Karnataka Official Helplines</h5>
+                    <div class="p-3 rounded bg-white bg-opacity-10 mb-2">
+                        <div class="small text-white-50">Janaspandana Grievance Helpline:</div>
+                        <div class="fw-bold text-white fs-6"><i class="bi bi-headset text-warning me-1"></i> 1902 (Toll-Free 24x7)</div>
+                    </div>
+                    <div class="p-3 rounded bg-white bg-opacity-10 mb-2">
+                        <div class="small text-white-50">Karnataka State Emergency (ERSS):</div>
+                        <div class="fw-bold text-white fs-6"><i class="bi bi-shield-fill-check text-warning me-1"></i> 112 (Police, Fire, Medical)</div>
+                    </div>
+                    <div class="p-3 rounded bg-white bg-opacity-10 mb-2">
+                        <div class="small text-white-50">BESCOM / Electrical Faults:</div>
+                        <div class="fw-bold text-white fs-6"><i class="bi bi-lightning-charge-fill text-warning me-1"></i> 1912 (24x7 Control)</div>
+                    </div>
+                    <div class="p-3 rounded bg-white bg-opacity-10">
+                        <div class="small text-white-50">KSDMA Flood & Disaster Control:</div>
+                        <div class="fw-bold text-white fs-6"><i class="bi bi-water text-warning me-1"></i> 1077 (District Control)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom-bar d-flex justify-content-between align-items-center flex-wrap gap-2 text-secondary">
+                <div>
+                    &copy; 2026 CivicTrack. Public Grievance and Civic Issue Reporting System. All rights reserved.
+                </div>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-secondary text-decoration-none">Privacy Policy</a>
+                    <span>•</span>
+                    <a href="#" class="text-secondary text-decoration-none">Terms of Service</a>
+                    <span>•</span>
+                    <a href="#" class="text-secondary text-decoration-none">Citizen Charter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom API and Auth modules -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js?v=2"></script>
+
+    <!-- Page Specific Interactive Scripts -->
+    <script>
+        function handleQuickTrack(e) {
+            e.preventDefault();
+            const trackVal = document.getElementById('trackingInput').value.trim();
+            if (trackVal) {
+                window.location.href = `grievance-details.html?track=${encodeURIComponent(trackVal)}`;
+            }
+        }
+
+        function handleModalTrack(e) {
+            e.preventDefault();
+            const trackVal = document.getElementById('modalTrackingInput').value.trim();
+            if (trackVal) {
+                window.location.href = `grievance-details.html?track=${encodeURIComponent(trackVal)}`;
+            }
+        }
+    </script>
+</body>
+</html>

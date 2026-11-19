@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicTrack – Central Administration Console</title>
+    <meta name="description"
+        content="Municipal governance console for complaint dispatch, department SLA monitoring, and city analytics.">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/my-complaints.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body class="admin-body">
+
+    <!-- Top Administration Header -->
+    <header class="admin-header d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+            <!-- Mobile Sidebar Hamburger Toggle -->
+            <button class="btn btn-light d-lg-none p-2 rounded-3 border" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#adminMobileSidebar" aria-controls="adminMobileSidebar" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+
+            <!-- Brand Emblem & Title -->
+            <a href="admin-dashboard.html" class="navbar-brand d-flex align-items-center gap-2 mb-0">
+                <div class="admin-emblem-badge">
+                    <i class="bi bi-shield-shaded"></i>
+                </div>
+                <div>
+                    <span class="fw-bold fs-5 text-navy">CivicTrack</span>
+                    <span class="badge bg-navy text-white ms-2 px-2 py-1 brand-badge"
+                        style="background-color: #0f172a !important;">Central Admin</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Header Actions: Quick Stats, Admin Avatar & Logout -->
+        <div class="d-flex align-items-center gap-3">
+            <div class="d-none d-md-flex align-items-center gap-2 small text-muted border-end pe-3">
+                <span class="badge bg-success-subtle text-success p-1 px-2"><i class="bi bi-circle-fill me-1"
+                        style="font-size: 0.5rem;"></i> System Live</span>
+                <span>Municipal SLA: <strong>96.2%</strong></span>
+            </div>
+
+            <!-- Admin Profile Menu -->
+            <div class="dropdown">
+                <button
+                    class="btn btn-light border rounded-pill d-flex align-items-center gap-2 py-1 px-3 dropdown-toggle shadow-sm"
+                    type="button" data-bs-toggle="dropdown">
+                    <div class="user-avatar-circle"
+                        style="width: 32px; height: 32px; font-size: 0.85rem; background: #0f172a;">A</div>
+                    <span class="fw-bold small text-navy d-none d-sm-inline" id="adminNavName">System
+                        Administrator</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                    <li class="px-3 py-2 border-bottom">
+                        <div class="fw-bold text-dark">Executive Office</div>
+                        <small class="text-muted">admin@civictrack.com</small>
+                    </li>
+                    <li><button class="dropdown-item py-2" data-bs-toggle="modal" data-bs-target="#departmentsModal"><i
+                                class="bi bi-building me-2 text-primary"></i> Municipal Departments</button></li>
+                    <li><a class="dropdown-item py-2" href="index.html"><i
+                                class="bi bi-house-door me-2 text-secondary"></i> Public Portal</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><button class="dropdown-item py-2 text-danger" onclick="Auth.logout()"><i
+                                class="bi bi-box-arrow-right me-2"></i> Sign Out</button></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Wrapper with Desktop Sidebar & Content -->
+    <div class="admin-wrapper">
+
+        <!-- 1. DESKTOP FIXED SIDEBAR -->
+        <aside class="admin-sidebar d-none d-lg-flex">
+            <div class="admin-sidebar-heading">Central Administration</div>
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" onclick="filterBySidebar('ALL', this); return false;">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin-complaints.html">
+                        <i class="bi bi-inbox-fill"></i>
+                        <span>All Complaints</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin-complaints.html?status=SUBMITTED">
+                        <i class="bi bi-hourglass-split text-warning"></i>
+                        <span>Pending Complaints</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin-complaints.html?status=IN_PROGRESS">
+                        <i class="bi bi-tools text-info"></i>
+                        <span>In Progress</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin-complaints.html?status=RESOLVED">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <span>Resolved</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin-map.html">
+                        <i class="bi bi-geo-alt-fill text-danger"></i>
+                        <span>Geographic Map</span>
+                    </a>
+                </li>
+
+                <div class="admin-sidebar-heading mt-3">Governance</div>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#departmentsModal">
+                        <i class="bi bi-buildings"></i>
+                        <span>Manage Departments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#analytics-section">
+                        <i class="bi bi-bar-chart-line-fill"></i>
+                        <span>Reports and Analytics</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#adminNotifModal">
+                        <i class="bi bi-bell-fill"></i>
+                        <span>Notifications</span>
+                        <span class="badge bg-danger rounded-pill ms-auto" style="font-size: 0.7rem;">5</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Logout in Sidebar -->
+            <div class="pt-3 border-top border-secondary mt-3">
+                <button class="nav-link text-danger w-100 text-start bg-transparent border-0" onclick="Auth.logout()">
+                    <i class="bi bi-box-arrow-right text-danger"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- 2. MOBILE RESPONSIVE OFFCANVAS SIDEBAR -->
+        <div class="offcanvas offcanvas-start offcanvas-admin" tabindex="-1" id="adminMobileSidebar"
+            aria-labelledby="adminMobileSidebarLabel">
+            <div class="offcanvas-header border-bottom border-secondary">
+                <div class="d-flex align-items-center gap-2" id="adminMobileSidebarLabel">
+                    <div class="admin-emblem-badge">
+                        <i class="bi bi-shield-shaded"></i>
+                    </div>
+                    <span class="fw-bold text-white fs-5">CivicTrack Admin</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column p-3">
+                <div class="admin-sidebar-heading">Navigation</div>
+                <ul class="nav flex-column mb-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="filterBySidebar('ALL', this)"
+                            data-bs-dismiss="offcanvas">
+                            <i class="bi bi-speedometer2"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-complaints.html">
+                            <i class="bi bi-inbox-fill"></i>
+                            <span>All Complaints</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-complaints.html?status=SUBMITTED">
+                            <i class="bi bi-hourglass-split text-warning"></i>
+                            <span>Pending Complaints</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-complaints.html?status=IN_PROGRESS">
+                            <i class="bi bi-tools text-info"></i>
+                            <span>In Progress</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-complaints.html?status=RESOLVED">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <span>Resolved</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-map.html">
+                            <i class="bi bi-geo-alt-fill text-danger"></i>
+                            <span>Geographic Map</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#departmentsModal"
+                            data-bs-dismiss="offcanvas">
+                            <i class="bi bi-buildings"></i>
+                            <span>Manage Departments</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analytics-section" data-bs-dismiss="offcanvas">
+                            <i class="bi bi-bar-chart-line-fill"></i>
+                            <span>Reports and Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#adminNotifModal"
+                            data-bs-dismiss="offcanvas">
+                            <i class="bi bi-bell-fill"></i>
+                            <span>Notifications</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="pt-3 border-top border-secondary">
+                    <button class="nav-link text-danger w-100 text-start bg-transparent border-0"
+                        onclick="Auth.logout()">
+                        <i class="bi bi-box-arrow-right text-danger"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. MAIN DASHBOARD CONTENT -->
+        <main class="admin-main">
+
+            <!-- Welcome Header & Controls -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                <div>
+                    <h3 class="fw-bold text-navy mb-1">Administrative Intelligence & Oversight</h3>
+                    <p class="text-muted small mb-0">City-wide real-time grievance telemetry, inter-departmental
+                        routing, and SLA compliance monitoring.</p>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="loadAdminData()">
+                        <i class="bi bi-arrow-clockwise me-1"></i> Refresh Stream
+                    </button>
+                    <button class="btn btn-gov-navy btn-sm" data-bs-toggle="modal" data-bs-target="#departmentsModal">
+                        <i class="bi bi-building me-1"></i> Department SLAs
+                    </button>
+                </div>
+            </div>
+
+            <!-- 4. DASHBOARD CARDS (5 Cards: Total, Pending, In Progress, Resolved, Rejected) -->
+            <div class="row g-3 mb-4">
+
+                <!-- 1. Total Complaints -->
+                <div class="col-12 col-sm-6 col-xl">
+                    <div class="admin-metric-card">
+                        <div class="metric-header">
+                            <div class="metric-label-text">TOTAL COMPLAINTS</div>
+                            <div class="admin-metric-icon icon-total"><i class="bi bi-folder-fill"></i></div>
+                        </div>
+                        <div class="metric-value-text" id="metricTotalAll">12</div>
+                        <small class="text-muted"><i class="bi bi-clock me-1"></i> All City Wards</small>
+                    </div>
+                </div>
+
+                <!-- 2. Pending -->
+                <div class="col-12 col-sm-6 col-xl">
+                    <div class="admin-metric-card">
+                        <div class="metric-header">
+                            <div class="metric-label-text">PENDING</div>
+                            <div class="admin-metric-icon icon-pending"><i class="bi bi-hourglass-split"></i></div>
+                        </div>
+                        <div class="metric-value-text text-warning" id="metricPending">2</div>
+                        <small class="text-muted"><span class="badge bg-warning-subtle text-warning-emphasis">Awaiting
+                                Review</span></small>
+                    </div>
+                </div>
+
+                <!-- 3. In Progress -->
+                <div class="col-12 col-sm-6 col-xl">
+                    <div class="admin-metric-card">
+                        <div class="metric-header">
+                            <div class="metric-label-text">IN PROGRESS</div>
+                            <div class="admin-metric-icon icon-progress"><i class="bi bi-tools"></i></div>
+                        </div>
+                        <div class="metric-value-text text-info" id="metricProgress">3</div>
+                        <small class="text-muted"><span class="badge bg-info-subtle text-info-emphasis">Crews
+                                Assigned</span></small>
+                    </div>
+                </div>
+
+                <!-- 4. Resolved -->
+                <div class="col-12 col-sm-6 col-xl">
+                    <div class="admin-metric-card">
+                        <div class="metric-header">
+                            <div class="metric-label-text">RESOLVED</div>
+                            <div class="admin-metric-icon icon-resolved"><i class="bi bi-check-circle-fill"></i></div>
+                        </div>
+                        <div class="metric-value-text text-success" id="metricResolved">5</div>
+                        <small class="text-muted"><span class="badge bg-success-subtle text-success-emphasis">SLA
+                                Verified</span></small>
+                    </div>
+                </div>
+
+                <!-- 5. Rejected -->
+                <div class="col-12 col-sm-6 col-xl">
+                    <div class="admin-metric-card">
+                        <div class="metric-header">
+                            <div class="metric-label-text">REJECTED</div>
+                            <div class="admin-metric-icon icon-rejected"><i class="bi bi-x-circle-fill"></i></div>
+                        </div>
+                        <div class="metric-value-text text-danger" id="metricRejected">2</div>
+                        <small class="text-muted"><span
+                                class="badge bg-danger-subtle text-danger-emphasis">Non-Jurisdiction</span></small>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 5. THREE CHART.JS VISUALIZATIONS ROW -->
+            <div class="row g-4 mb-4" id="analytics-section">
+
+                <!-- Chart 1: Monthly Complaint Trend -->
+                <div class="col-lg-5">
+                    <div class="chart-box-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold text-navy mb-0">Monthly Complaint Volume</h6>
+                                <small class="text-muted">Reported vs. Resolved trends (Last 6 Months)</small>
+                            </div>
+                            <span class="badge bg-primary-subtle text-primary">Monthly Trend</span>
+                        </div>
+                        <div class="chart-canvas-wrap">
+                            <canvas id="monthlyTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Category-wise Complaint Chart -->
+                <div class="col-lg-4">
+                    <div class="chart-box-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold text-navy mb-0">Category Breakdown</h6>
+                                <small class="text-muted">Volume by municipal infrastructure type</small>
+                            </div>
+                            <span class="badge bg-primary-subtle text-primary">Categories</span>
+                        </div>
+                        <div class="chart-canvas-wrap">
+                            <canvas id="categoryVolumeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart 3: Status Distribution Chart -->
+                <div class="col-lg-3">
+                    <div class="chart-box-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold text-navy mb-0">Status Distribution</h6>
+                                <small class="text-muted">System-wide resolution ratio</small>
+                            </div>
+                        </div>
+                        <div class="chart-canvas-wrap">
+                            <canvas id="statusDistributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 6. RECENT COMPLAINTS TABLE STREAM -->
+            <div class="admin-table-card" id="complaintsStreamSection">
+                <div class="admin-table-header">
+                    <div>
+                        <h5 class="fw-bold text-navy mb-0">Recent Grievance Stream</h5>
+                        <small class="text-muted" id="tableCountText">Displaying complaints stream</small>
+                    </div>
+
+                    <!-- Search & Filter Controls -->
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <div class="search-input-wrap">
+                            <i class="bi bi-search"></i>
+                            <input type="text" class="form-control form-control-sm" id="adminTableSearch"
+                                placeholder="Search ID, Citizen, Title..." style="width: 230px;">
+                        </div>
+
+                        <select class="form-select form-select-sm" id="adminDeptFilter" style="width: 170px;">
+                            <option value="ALL" selected>All Departments</option>
+                            <option value="Public Works">Public Works</option>
+                            <option value="Water Supply">Water Supply</option>
+                            <option value="Solid Waste">Solid Waste</option>
+                            <option value="Electricity">Electricity</option>
+                            <option value="Drainage">Drainage & Sewerage</option>
+                            <option value="Urban Development">Urban Development</option>
+                        </select>
+
+                        <a href="admin-complaints.html" class="btn btn-primary btn-sm d-flex align-items-center gap-1 shadow-sm">
+                            <i class="bi bi-table"></i>
+                            <span>Complaint Manager</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-admin align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Tracking #</th>
+                                <th>Citizen & Location</th>
+                                <th>Issue Subject & Category</th>
+                                <th>Date Filed</th>
+                                <th>Priority</th>
+                                <th>Current Status</th>
+                                <th class="text-end">Administrative Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminComplaintsTbody">
+                            <!-- Populated dynamically via admin-dashboard.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- 7. STATUS DISPATCH & UPDATE ACTION MODAL -->
+    <div class="modal fade" id="adminStatusModal" tabindex="-1" aria-labelledby="adminStatusModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-navy text-white">
+                    <h5 class="modal-title fw-bold" id="adminStatusModalLabel">
+                        <i class="bi bi-shield-check text-warning me-2"></i> Update Grievance Status & SLA
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" id="modalComplaintIdHidden">
+
+                    <div class="mb-3 p-3 bg-light rounded border">
+                        <div class="small text-muted">Tracking Code:</div>
+                        <div class="fw-bold text-primary fs-6 font-monospace" id="modalTrackingIdDisplay">GRV-2026-8910
+                        </div>
+                        <div class="fw-semibold text-dark small mt-1" id="modalTitleDisplay">Issue Title</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modalStatusSelect" class="form-label fw-semibold">Assign New Status <span
+                                class="text-danger">*</span></label>
+                        <select class="form-select form-select-lg" id="modalStatusSelect">
+                            <option value="UNDER_REVIEW">UNDER REVIEW (Inspection queued)</option>
+                            <option value="ASSIGNED">ASSIGNED (Ward crew dispatched)</option>
+                            <option value="IN_PROGRESS">IN PROGRESS (Work actively ongoing)</option>
+                            <option value="RESOLVED">RESOLVED (Repairs completed & verified)</option>
+                            <option value="REJECTED">REJECTED (Non-jurisdiction / Invalid)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modalRemarksInput" class="form-label fw-semibold">Official Remarks & Action
+                            Taken</label>
+                        <textarea class="form-control" id="modalRemarksInput" rows="3"
+                            placeholder="Provide details of field engineer dispatch, repair actions, or justification for resolution/rejection..."></textarea>
+                        <small class="text-muted" style="font-size: 0.78rem;">These remarks are visible to the citizen
+                            in their tracking timeline.</small>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-gov-navy px-4" id="modalSaveStatusBtn"
+                            onclick="submitAdminStatusChange()">
+                            Save Update
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. MANAGE DEPARTMENTS & SLAS MODAL -->
+    <div class="modal fade" id="departmentsModal" tabindex="-1" aria-labelledby="departmentsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-navy text-white">
+                    <h5 class="modal-title fw-bold" id="departmentsModalLabel">
+                        <i class="bi bi-buildings text-warning me-2"></i> Municipal Departments & Resolution SLAs
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Department Name</th>
+                                    <th>Jurisdiction / Scope</th>
+                                    <th>Resolution SLA</th>
+                                    <th>Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Public Works Dept</strong></td>
+                                    <td>Roads, Bridges, Pavements</td>
+                                    <td><span class="badge bg-warning-subtle text-dark">5 Days</span></td>
+                                    <td><code>pwd@civictrack.local</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Water Supply Board</strong></td>
+                                    <td>Pipelines, Quality, Pressure</td>
+                                    <td><span class="badge bg-danger-subtle text-danger">3 Days</span></td>
+                                    <td><code>water@civictrack.local</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Solid Waste Mgmt</strong></td>
+                                    <td>Garbage Collection, Dumps</td>
+                                    <td><span class="badge bg-success-subtle text-success">48 Hours</span></td>
+                                    <td><code>sanitation@civictrack.local</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Electricity Board</strong></td>
+                                    <td>Streetlights, Wire Hazards</td>
+                                    <td><span class="badge bg-warning-subtle text-dark">3 Days</span></td>
+                                    <td><code>electricity@civictrack.local</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Drainage & Sewerage</strong></td>
+                                    <td>Storm drains, Manholes</td>
+                                    <td><span class="badge bg-danger-subtle text-danger">48 Hours</span></td>
+                                    <td><code>drainage@civictrack.local</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. ADMIN NOTIFICATIONS MODAL -->
+    <div class="modal fade" id="adminNotifModal" tabindex="-1" aria-labelledby="adminNotifModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-navy text-white">
+                    <h5 class="modal-title fw-bold" id="adminNotifModalLabel">
+                        <i class="bi bi-bell-fill text-warning me-2"></i> System Telemetry Alerts
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item px-0 py-2 border-bottom">
+                            <span class="badge bg-danger mb-1">Critical SLA</span>
+                            <div class="fw-bold small">Water line leak #GRV-2026-8842 nearing 48h limit</div>
+                            <small class="text-muted">Ward 2 - Dispatched to Junior Engineer</small>
+                        </div>
+                        <div class="list-group-item px-0 py-2 border-bottom">
+                            <span class="badge bg-success mb-1">Resolved</span>
+                            <div class="fw-bold small">Streetlight #GRV-2026-7731 closed by Officer John</div>
+                            <small class="text-muted">Verified by photometric test photo</small>
+                        </div>
+                        <div class="list-group-item px-0 py-2">
+                            <span class="badge bg-info mb-1">New Grievance</span>
+                            <div class="fw-bold small">Pothole complaint #GRV-2026-8910 logged in Ward 4</div>
+                            <small class="text-muted">Auto-assigned to Public Works Department</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Dismiss All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core API & Admin Engine -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/grievance.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+
+</html>

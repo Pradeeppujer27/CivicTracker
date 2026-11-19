@@ -1,0 +1,306 @@
+/* ==============================================================
+   CivicTrack - Complaint Tracking Page Stylesheet
+   Theme: Blue (#2563EB), Navy (#0F172A), Slate Light (#F8FAFC)
+   ============================================================== */
+
+:root {
+    --primary: #2563EB;
+    --primary-hover: #1d4ed8;
+    --navy: #0F172A;
+    --bg-light: #F8FAFC;
+    --border-color: #e2e8f0;
+    --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+}
+
+body.tracking-body {
+    background-color: var(--bg-light);
+    color: var(--navy);
+    font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    min-height: 100vh;
+}
+
+/* 1. Track Search Input Card */
+.track-search-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 30px;
+}
+
+.track-input-group {
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.track-input-group .form-control {
+    border-color: #cbd5e1;
+    font-size: 1.1rem;
+    padding: 14px 18px;
+}
+
+.track-input-group .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: none;
+}
+
+.btn-track-submit {
+    background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%);
+    color: #ffffff;
+    font-weight: 700;
+    padding: 12px 28px;
+    border: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-track-submit:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    color: #ffffff;
+}
+
+/* 2. Grievance Overview Card */
+.grievance-main-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.tracking-header-bar {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e3a8a 100%);
+    color: #ffffff;
+    padding: 24px 30px;
+}
+
+.tracking-id-badge {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 3. Visual Status Timeline (Horizontal & Vertical Responsive) */
+.timeline-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 30px;
+}
+
+/* Horizontal Process Bar for Large Screens */
+.stepper-wrapper {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.stepper-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    text-align: center;
+}
+
+.stepper-item::before {
+    position: absolute;
+    content: "";
+    border-bottom: 3px solid #e2e8f0;
+    width: 100%;
+    top: 24px;
+    left: -50%;
+    z-index: 1;
+}
+
+.stepper-item:first-child::before {
+    content: none;
+}
+
+.step-counter {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #f8fafc;
+    border: 3px solid #cbd5e1;
+    color: #64748b;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.step-name {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 2px;
+}
+
+.step-desc {
+    font-size: 0.76rem;
+    color: #94a3b8;
+    max-width: 140px;
+}
+
+/* Active & Completed States */
+.stepper-item.completed .step-counter {
+    background-color: #10b981;
+    border-color: #10b981;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+.stepper-item.completed::before {
+    border-bottom-color: #10b981;
+}
+
+.stepper-item.completed .step-name {
+    color: #065f46;
+}
+
+.stepper-item.active .step-counter {
+    background-color: var(--primary);
+    border-color: #bfdbfe;
+    color: #ffffff;
+    box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.2);
+    animation: pulseGlow 2s infinite;
+}
+
+.stepper-item.active .step-name {
+    color: var(--primary);
+}
+
+.stepper-item.active::before {
+    border-bottom-color: var(--primary);
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+/* Rejection Banner & Branch */
+.rejection-banner {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-left: 6px solid #dc2626;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 20px;
+}
+
+/* 4. Details Grid & Metadata */
+.detail-item-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    height: 100%;
+}
+
+.detail-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.detail-val {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+}
+
+/* Admin Remarks Box */
+.admin-remarks-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 14px;
+    padding: 22px;
+    position: relative;
+    margin-top: 20px;
+}
+
+.admin-remarks-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e40af;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+/* 5. Responsive Adjustments */
+@media (max-width: 767.98px) {
+    .stepper-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 10px;
+    }
+
+    .stepper-item {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+        margin-bottom: 24px;
+        width: 100%;
+        gap: 16px;
+    }
+
+    .stepper-item::before {
+        left: 24px;
+        top: 50px;
+        width: 3px;
+        height: calc(100% - 24px);
+        border-left: 3px solid #e2e8f0;
+        border-bottom: none;
+    }
+
+    .stepper-item.completed::before {
+        border-left-color: #10b981;
+    }
+
+    .stepper-item.active::before {
+        border-left-color: var(--primary);
+    }
+
+    .step-counter {
+        width: 44px;
+        height: 44px;
+        font-size: 0.95rem;
+        flex-shrink: 0;
+        margin-bottom: 0;
+    }
+
+    .step-desc {
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicTrack – Account Sign In</title>
+    <meta name="description"
+        content="Sign in to your CivicTrack portal. Access citizen reporting, official redressal desk, or administrative analytics.">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Global & Auth Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="auth-body">
+
+    <!-- Top Gov Navigation Banner -->
+    <div class="gov-topbar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="text-decoration-none text-white small">
+                <i class="bi bi-arrow-left me-1"></i> Back to CivicTrack Public Portal
+            </a>
+            <span class="small text-white-50 d-none d-sm-inline">
+                <i class="bi bi-shield-check text-warning me-1"></i> Official Government Public Portal
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Login Container -->
+    <div class="auth-wrapper">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+
+                    <div class="auth-card">
+                        <div class="auth-card-body">
+
+                            <!-- Header / Emblem -->
+                            <div class="text-center mb-4">
+                                <div class="auth-emblem">
+                                    <i class="bi bi-shield-lock-fill"></i>
+                                </div>
+                                <h2 class="auth-title">Citizen & Staff Login</h2>
+                                <p class="auth-subtitle mb-0">
+                                    Enter your credentials to access your grievance dashboard.
+                                </p>
+                            </div>
+
+                            <!-- Alert Box for Success / Errors -->
+                            <div id="loginAlert" class="d-none" role="alert"></div>
+
+                            <!-- Login Form -->
+                            <form id="loginForm" novalidate>
+
+                                <!-- 1. Email -->
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Email Address <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                        <input type="email" class="form-control" id="loginEmail"
+                                            placeholder="e.g. citizen@civictrack.com" required autocomplete="email">
+                                    </div>
+                                    <div class="field-error-text" id="loginEmailError"></div>
+                                </div>
+
+                                <!-- 2. Password with Show/Hide Toggle -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label for="loginPassword" class="form-label mb-0">Password <span
+                                                class="text-danger">*</span></label>
+                                        <a href="#" class="small text-primary text-decoration-none fw-semibold"
+                                            data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
+                                            Forgot password?
+                                        </a>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                        <input type="password" class="form-control" id="loginPassword"
+                                            placeholder="••••••••" required autocomplete="current-password">
+                                        <button type="button" class="password-toggle-btn" data-target="loginPassword"
+                                            aria-label="Toggle password visibility">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="field-error-text" id="loginPasswordError"></div>
+                                </div>
+
+                                <!-- 3. Remember Me Checkbox -->
+                                <div class="mb-4 d-flex justify-content-between align-items-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                                        <label class="form-check-label small text-secondary" for="rememberMe">
+                                            Keep me signed in
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- 4. Submit Button -->
+                                <button type="submit" class="btn-auth-primary" id="loginSubmitBtn">
+                                    <i class="bi bi-box-arrow-in-right me-1"></i> Sign In to Account
+                                </button>
+                            </form>
+
+                            <!-- 5. Register Link -->
+                            <div class="text-center auth-footer-links mt-4 pt-3 border-top">
+                                <span>Don't have a citizen account?</span>
+                                <a href="register.html" class="ms-1">Register as Citizen</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Demo Credentials Callout -->
+                    <div class="auth-hint-card mt-3">
+                        <div class="d-flex align-items-center gap-2 fw-bold text-navy mb-2">
+                            <i class="bi bi-info-circle-fill text-primary"></i>
+                            <span>Pre-Configured Demo Accounts (Password: <code>password123</code>)</span>
+                        </div>
+                        <div class="row g-2 small text-secondary">
+                            <div class="col-12">
+                                • <strong class="text-dark">Citizen:</strong> <code>citizen@civictrack.com</code>
+                                <button type="button" class="btn btn-sm btn-link p-0 ms-2 text-decoration-none"
+                                    onclick="fillDemo('citizen@civictrack.com')">Use</button>
+                            </div>
+                            <div class="col-12">
+                                • <strong class="text-dark">Official:</strong> <code>officer@civictrack.com</code>
+                                <button type="button" class="btn btn-sm btn-link p-0 ms-2 text-decoration-none"
+                                    onclick="fillDemo('officer@civictrack.com')">Use</button>
+                            </div>
+                            <div class="col-12">
+                                • <strong class="text-dark">Admin:</strong> <code>admin@civictrack.com</code>
+                                <button type="button" class="btn btn-sm btn-link p-0 ms-2 text-decoration-none"
+                                    onclick="fillDemo('admin@civictrack.com')">Use</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-navy text-white">
+                    <h5 class="modal-title fw-bold" id="forgotModalLabel">
+                        <i class="bi bi-key-fill text-warning me-2"></i> Reset Account Password
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="text-muted small mb-3">
+                        Enter your registered email address. We will verify your citizen identity and send a secure
+                        password reset link.
+                    </p>
+                    <div id="forgotAlert" class="alert d-none" role="alert"></div>
+                    <form id="forgotPasswordForm">
+                        <div class="mb-3">
+                            <label for="forgotEmail" class="form-label">Registered Email</label>
+                            <input type="email" class="form-control" id="forgotEmail" placeholder="name@example.com"
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-gov-primary w-100 py-2 fw-semibold">
+                            Send Reset Link
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom API, Auth & Form Handling Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/auth-pages.js"></script>
+
+    <!-- Page Specific Quick Helpers -->
+    <script>
+        // Check for ?registered=true query param to show a congratulatory banner
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('registered') === 'true') {
+            const alertBox = document.getElementById('loginAlert');
+            showAlert(alertBox, 'success', 'Registration completed successfully! Please sign in with your email and password.');
+        }
+
+        // Demo autofill helper
+        function fillDemo(email) {
+            document.getElementById('loginEmail').value = email;
+            document.getElementById('loginPassword').value = 'password123';
+        }
+    </script>
+</body>
+
+</html>

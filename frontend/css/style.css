@@ -1,0 +1,661 @@
+/* ==============================================================
+   CivicTrack - Modern Government-Style Portal Stylesheet
+   Theme: Blue (#2563EB), Navy (#0F172A), Light Slate (#F8FAFC)
+   ============================================================== */
+
+:root {
+    --primary: #2563EB;
+    --primary-hover: #1d4ed8;
+    --primary-light: #eff6ff;
+    --navy: #0F172A;
+    --navy-light: #1e293b;
+    --bg-light: #F8FAFC;
+    --text-main: #0F172A;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+    --hover-shadow: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --------------------------------------------------------------
+   1. Official Top Bar
+   -------------------------------------------------------------- */
+.gov-topbar {
+    background-color: var(--navy);
+    color: #94a3b8;
+    font-size: 0.82rem;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gov-topbar a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.gov-topbar a:hover {
+    color: #ffffff;
+}
+
+/* --------------------------------------------------------------
+   2. Main Navigation
+   -------------------------------------------------------------- */
+.navbar-custom {
+    background-color: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    padding: 14px 0;
+    transition: var(--transition);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.45rem;
+    color: var(--navy) !important;
+    letter-spacing: -0.5px;
+}
+
+.brand-emblem {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1.35rem;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.brand-text-sub {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--primary);
+    display: block;
+    margin-top: -3px;
+}
+
+.navbar-custom .nav-link {
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 8px 16px !important;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: var(--primary);
+    background-color: var(--primary-light);
+}
+
+/* --------------------------------------------------------------
+   3. Hero Section
+   -------------------------------------------------------------- */
+.hero-section {
+    position: relative;
+    background: linear-gradient(145deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+    color: #ffffff;
+    padding: 95px 0 110px;
+    overflow: hidden;
+}
+
+.hero-overlay-grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.hero-badge {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -1px;
+    color: #ffffff;
+}
+
+.hero-title span {
+    background: linear-gradient(90deg, #93c5fd, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+    font-size: 1.15rem;
+    color: #e2e8f0;
+    max-width: 620px;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+/* Quick Tracker Box */
+.hero-tracker-card {
+    background: #ffffff;
+    color: var(--navy);
+    border-radius: 18px;
+    padding: 32px;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    position: relative;
+    z-index: 2;
+}
+
+/* --------------------------------------------------------------
+   4. Buttons & Interactive Controls
+   -------------------------------------------------------------- */
+.btn-gov-primary {
+    background-color: var(--primary);
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-gov-primary:hover {
+    background-color: var(--primary-hover);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+.btn-gov-outline {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 10px 22px;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-gov-outline:hover {
+    background-color: #ffffff;
+    color: var(--primary);
+    border-color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(255, 255, 255, 0.2);
+}
+
+.btn-gov-navy {
+    background-color: var(--navy);
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    transition: var(--transition);
+}
+
+.btn-gov-navy:hover {
+    background-color: #1e293b;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------
+   5. Complaint Category Cards
+   -------------------------------------------------------------- */
+.category-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 30px 26px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), #60a5fa);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--hover-shadow);
+    border-color: #bfdbfe;
+}
+
+.category-card:hover::before {
+    opacity: 1;
+}
+
+.category-icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    margin-bottom: 20px;
+    transition: var(--transition);
+}
+
+.category-card:hover .category-icon-box {
+    transform: scale(1.08);
+}
+
+/* Specific Category Color Accents */
+.cat-road { background-color: #fef2f2; color: #dc2626; }
+.cat-waste { background-color: #ecfdf5; color: #059669; }
+.cat-water { background-color: #eff6ff; color: #2563eb; }
+.cat-light { background-color: #fffbeb; color: #d97706; }
+.cat-drain { background-color: #f0fdfa; color: #0d9488; }
+.cat-infra { background-color: #f5f3ff; color: #7c3aed; }
+
+.category-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+}
+
+.category-desc {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.category-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background-color: var(--bg-light);
+    color: #475569;
+}
+
+/* --------------------------------------------------------------
+   6. How It Works Section
+   -------------------------------------------------------------- */
+.process-step-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    height: 100%;
+    transition: var(--transition);
+}
+
+.process-step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+    border-color: #bfdbfe;
+}
+
+.step-number-badge {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+}
+
+.step-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 10px 0 18px;
+}
+
+/* --------------------------------------------------------------
+   7. Statistics Section
+   -------------------------------------------------------------- */
+.stats-section {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 80px 0;
+    position: relative;
+}
+
+.stat-item {
+    padding: 24px 16px;
+    text-align: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item:last-child {
+    border-right: none;
+}
+
+.stat-number {
+    font-size: 2.9rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #60a5fa;
+    line-height: 1.1;
+    margin-bottom: 6px;
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --------------------------------------------------------------
+   8. About Section
+   -------------------------------------------------------------- */
+.about-pillar-card {
+    background: #ffffff;
+    border-left: 4px solid var(--primary);
+    padding: 18px 20px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    margin-bottom: 16px;
+    transition: var(--transition);
+}
+
+.about-pillar-card:hover {
+    transform: translateX(4px);
+    background-color: var(--primary-light);
+}
+
+/* --------------------------------------------------------------
+   9. Contact Section
+   -------------------------------------------------------------- */
+.max-w-700 {
+    max-width: 700px;
+}
+
+.text-navy {
+    color: var(--navy) !important;
+}
+
+.fs-7 {
+    font-size: 0.75rem !important;
+}
+
+.contact-info-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+}
+
+.contact-info-card:hover {
+    transform: translateY(-3px);
+    border-color: #bfdbfe;
+    box-shadow: var(--hover-shadow);
+}
+
+.contact-icon-bubble {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------
+   10. Government Footer
+   -------------------------------------------------------------- */
+.gov-footer {
+    background-color: var(--navy);
+    color: #94a3b8;
+    padding: 70px 0 25px;
+    border-top: 4px solid var(--primary);
+}
+
+.gov-footer h5 {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.gov-footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.gov-footer ul li {
+    margin-bottom: 10px;
+}
+
+.gov-footer ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.gov-footer ul li a:hover {
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+.footer-bottom-bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 24px;
+    margin-top: 50px;
+    font-size: 0.85rem;
+}
+
+/* --------------------------------------------------------------
+   11. Responsive Adjustments
+   -------------------------------------------------------------- */
+@media (max-width: 991.98px) {
+    .hero-title {
+        font-size: 2.4rem;
+    }
+    .stat-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px 0;
+    }
+    .stat-item:last-child {
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .hero-title {
+        font-size: 1.95rem;
+    }
+    .hero-section {
+        padding: 60px 0 70px;
+    }
+    .hero-tracker-card {
+        padding: 20px;
+    }
+    .stat-number {
+        font-size: 2.2rem;
+    }
+}
+
+/* --------------------------------------------------------------
+   12. Leaflet.js Custom Markers & Popups (OpenStreetMap)
+   -------------------------------------------------------------- */
+.custom-leaflet-marker {
+    background: transparent !important;
+    border: none !important;
+}
+
+.custom-leaflet-marker > div {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+
+.custom-leaflet-marker:hover > div {
+    transform: rotate(-45deg) scale(1.15) !important;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16) !important;
+    padding: 2px !important;
+}
+
+.leaflet-popup-content {
+    margin: 10px 12px !important;
+    line-height: 1.4 !important;
+}
+
+/* --------------------------------------------------------------
+   13. In-App Notification Dropdown & History Styles
+   -------------------------------------------------------------- */
+.notif-dropdown-menu {
+    width: 380px;
+    max-width: 92vw;
+    border-radius: 14px !important;
+    padding: 0 !important;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.notif-header {
+    background-color: #ffffff;
+    padding: 14px 18px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notif-list-container {
+    max-height: 390px;
+    overflow-y: auto;
+}
+
+.notif-item {
+    padding: 13px 18px;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.15s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.notif-item:hover {
+    background-color: #f8fafc;
+}
+
+.notif-item.unread {
+    background-color: #eff6ff;
+}
+
+.notif-item.unread:hover {
+    background-color: #e0f2fe;
+}
+
+.notif-unread-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #2563EB;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.notif-remarks-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #2563EB;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: #334155;
+    line-height: 1.4;
+}
+
+.notif-footer {
+    background-color: #f8fafc;
+    padding: 10px 16px;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
+}
