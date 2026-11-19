@@ -120,23 +120,28 @@
                     <div class="auth-hint-card mt-3">
                         <div class="d-flex align-items-center gap-2 fw-bold text-navy mb-2">
                             <i class="bi bi-info-circle-fill text-primary"></i>
-                            <span>Pre-Configured Demo Accounts (Password: <code>password123</code>)</span>
+                            <span>Quick Access &amp; Demo Accounts</span>
                         </div>
                         <div class="row g-2 small text-secondary">
                             <div class="col-12">
+                                • <strong class="text-dark">Pradeep Pujer:</strong> <code>pradiipujer27@gmail.com</code>
+                                <button type="button" class="btn btn-sm btn-link p-0 ms-2 text-decoration-none fw-semibold"
+                                    onclick="fillDemo('pradiipujer27@gmail.com', 'Pradeeppujer@27')">Use</button>
+                            </div>
+                            <div class="col-12">
                                 • <strong class="text-dark">Citizen:</strong> <code>citizen@civictrack.com</code>
                                 <button type="button" class="btn btn-sm btn-link p-0 ms-2 text-decoration-none"
-                                    onclick="fillDemo('citizen@civictrack.com')">Use</button>
+                                    onclick="fillDemo('citizen@civictrack.com', 'password123')">Use</button>
                             </div>
                             <div class="col-12">
                                 • <strong class="text-dark">Official:</strong> <code>officer@civictrack.com</code>
                                 <button type="button" class="btn btn-sm btn-link p-0 ms-2 text-decoration-none"
-                                    onclick="fillDemo('officer@civictrack.com')">Use</button>
+                                    onclick="fillDemo('officer@civictrack.com', 'password123')">Use</button>
                             </div>
                             <div class="col-12">
                                 • <strong class="text-dark">Admin:</strong> <code>admin@civictrack.com</code>
                                 <button type="button" class="btn btn-sm btn-link p-0 ms-2 text-decoration-none"
-                                    onclick="fillDemo('admin@civictrack.com')">Use</button>
+                                    onclick="fillDemo('admin@civictrack.com', 'password123')">Use</button>
                             </div>
                         </div>
                     </div>
@@ -197,9 +202,9 @@
         }
 
         // Demo autofill helper
-        function fillDemo(email) {
+        function fillDemo(email, pwd) {
             document.getElementById('loginEmail').value = email;
-            document.getElementById('loginPassword').value = 'password123';
+            document.getElementById('loginPassword').value = pwd || 'password123';
         }
     </script>
 </body>

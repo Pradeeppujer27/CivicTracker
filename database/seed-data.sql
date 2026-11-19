@@ -38,14 +38,16 @@ ON DUPLICATE KEY UPDATE name=VALUES(name);
 INSERT INTO users (id, full_name, email, phone_number, password_hash, department_id, is_active) VALUES
 (1, 'System Administrator', 'admin@civictrack.com', '+1-555-9000', '$2a$10$wK1k6iVjGk1Oq9kQZ5k1v.fVbQxT9kUqK4gPZ9m4N0j5B2u8W8m1O', NULL, TRUE),
 (2, 'PWD Officer John', 'officer@civictrack.com', '+1-555-9001', '$2a$10$wK1k6iVjGk1Oq9kQZ5k1v.fVbQxT9kUqK4gPZ9m4N0j5B2u8W8m1O', 1, TRUE),
-(3, 'Jane Citizen', 'citizen@civictrack.com', '+1-555-9002', '$2a$10$wK1k6iVjGk1Oq9kQZ5k1v.fVbQxT9kUqK4gPZ9m4N0j5B2u8W8m1O', NULL, TRUE)
+(3, 'Jane Citizen', 'citizen@civictrack.com', '+1-555-9002', '$2a$10$wK1k6iVjGk1Oq9kQZ5k1v.fVbQxT9kUqK4gPZ9m4N0j5B2u8W8m1O', NULL, TRUE),
+(4, 'Pradeep Pujer', 'pradiipujer27@gmail.com', '+91-9876543219', '$2a$10$grqMxytV.y/.byNlrAIeR.BQPlzI5g2.6dwohdEg6OxO4LMdMo7NC', NULL, TRUE)
 ON DUPLICATE KEY UPDATE email=VALUES(email);
 
 -- Assign Roles
 INSERT INTO user_roles (user_id, role_id) VALUES
 (1, 3), -- Admin has ROLE_ADMIN
 (2, 2), -- Officer has ROLE_OFFICIAL
-(3, 1)  -- Citizen has ROLE_CITIZEN
+(3, 1), -- Citizen has ROLE_CITIZEN
+(4, 1)  -- Pradeep has ROLE_CITIZEN
 ON DUPLICATE KEY UPDATE user_id=VALUES(user_id);
 
 
