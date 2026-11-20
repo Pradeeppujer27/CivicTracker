@@ -316,3 +316,5 @@ The repository includes a comprehensive 16-section college project submission re
 
 ## 👨‍💻 Project Submission Notice
 This project was developed for academic capstone presentation and municipal civic technology assessment. All source code, database scripts, and design documentation are fully reproducible.
+#   C i v i c T r a c k e r  
+ 
