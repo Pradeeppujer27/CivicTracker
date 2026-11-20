@@ -588,7 +588,7 @@ cd CivicTrack
    ```
 2. Execute the complete database initialization script:
    ```bash
-   mysql -u root -p < civictrack.sql
+   mysql -u root -p < database/civictrack.sql
    ```
    This creates the `civictrack` database, configures all 5 tables (`users`, `complaints`, `complaint_images`, `complaint_updates`, `notifications`), and inserts sample development records.
 
@@ -631,7 +631,7 @@ Because CivicTrack's frontend is purely static HTML5/CSS3/JavaScript, serve it u
 ### Step 1: Deploy Database (Railway / Aiven)
 1. Create a managed MySQL 8 service in Railway or Aiven.
 2. Note your database credentials (`Host`, `Port`, `Database`, `User`, `Password`).
-3. Connect via MySQL Workbench or command line and execute [civictrack.sql](file:///p:/CivicTrack/civictrack.sql).
+3. Connect via MySQL Workbench or command line and execute [civictrack.sql](file:///p:/CivicTrack/database/civictrack.sql).
 
 ### Step 2: Deploy Backend to Render / Railway
 1. Push your repository to GitHub.

@@ -19,7 +19,7 @@
 | **Academic Purpose** | Final Year / Capstone Engineering Project Submission |
 | **Domain** | Full-Stack Web Development, Smart Governance (GovTech), GIS Mapping & Cloud Computing |
 | **Complete Documentation** | [PROJECT_DOCUMENTATION.md](file:///p:/CivicTrack/PROJECT_DOCUMENTATION.md) (All 16 IEEE / University Standard Sections) |
-| **Database Schema** | [civictrack.sql](file:///p:/CivicTrack/civictrack.sql) (MySQL 8.0+ DDL + DML Seeds) |
+| **Database Schema** | [civictrack.sql](file:///p:/CivicTrack/database/civictrack.sql) (MySQL 8.0+ DDL + DML Seeds) |
 
 ---
 
@@ -76,8 +76,6 @@ CivicTrack/
 │   ├── report-grievance.html          # Complaint form: GPS geolocation capture, interactive map picker, photo upload
 │   ├── my-complaints.html             # Citizen complaint archive with search, filter, and pagination
 │   ├── grievance-details.html         # Detailed complaint view with resolution timeline and official notes
-│   ├── track-complaint.html           # Public / direct tracking redirect helper
-│   ├── admin-login.html               # Dedicated administrative security gateway
 │   ├── admin-dashboard.html           # Admin analytics: status distribution, department load, recent activity
 │   ├── admin-complaints.html          # Admin complaint console: status transitions, department routing, remarks
 │   ├── admin-map.html                 # Leaflet.js administrative GIS map with interactive cluster pins
@@ -141,7 +139,6 @@ CivicTrack/
 │           └── exception/             # Global REST Exception Interceptors
 │
 ├── uploads/                           # Persistent directory for uploaded complaint evidence
-├── civictrack.sql                     # Canonical database script (5 tables, indexes, sample data)
 ├── Dockerfile                         # Root Dockerfile for Render / Railway container deployment
 ├── render.yaml                        # Render Cloud Blueprint (Web service + MySQL + Persistent Disk)
 ├── railway.json                       # Railway deployment manifest
@@ -167,9 +164,9 @@ CivicTrack/
 ### Step 2: Database Initialization
 1. Start MySQL and run the initialization script:
    ```bash
-   mysql -u root -p < p:\CivicTrack\civictrack.sql
+   mysql -u root -p < p:\CivicTrack\database\civictrack.sql
    ```
-   *Or open `civictrack.sql` in MySQL Workbench and click Execute (⚡).*
+   *Or open `database/civictrack.sql` in MySQL Workbench and click Execute (⚡).*
 2. This creates:
    - Database: `civictrack`
    - Tables: `users`, `complaints`, `complaint_images`, `complaint_updates`, `notifications`
@@ -256,7 +253,7 @@ CivicTrack is decoupled and cloud-ready for free-tier platforms:
 - **Aiven for MySQL** (Free tier available) or **Railway MySQL**:
   1. Spin up a MySQL 8.0 instance.
   2. Copy connection URI parameters into backend environment variables.
-  3. Import `civictrack.sql` into the remote database.
+  3. Import `database/civictrack.sql` into the remote database.
 
 ---
 

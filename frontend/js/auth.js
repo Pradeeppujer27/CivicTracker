@@ -176,10 +176,7 @@ const Auth = {
      */
     requireAuth(requiredRole = null) {
         if (!this.isAuthenticated()) {
-            const redirectPage = (requiredRole === 'ROLE_ADMIN' || (Array.isArray(requiredRole) && requiredRole.includes('ROLE_ADMIN')))
-                ? 'admin-login.html'
-                : 'login.html';
-            window.location.href = redirectPage;
+            window.location.href = 'login.html';
             return false;
         }
         if (requiredRole && !this.hasRole(requiredRole)) {
